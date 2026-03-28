@@ -36,6 +36,7 @@ async function send(text) {
   sendBtn.disabled = true;
   chatInput.disabled = true;
   showTyping();
+
   try {
     // 🔗 Aquí usamos tu propia API en Render
     const r = await fetch("https://mi-api-clnb.onrender.com/api/ia", {
@@ -54,22 +55,30 @@ async function send(text) {
     history.push({ role: "assistant", content: reply });
 
     // 🔊 Reproducir voz automáticamente sin emojis
-    const textSinEmojis = reply.replace(/([\u2700-\u27BF]|[\uE000-\uF8FF]|[\uD800-\uDFFF]|[\uFE00-\uFE0F]|[\u1F300-\u1F6FF]|[\u1F900-\u1F9FF]|[\u1F1E0-\u1F1FF])/g, '');
-    const utterance = new SpeechSynthesisUtterance(textSinEmojis);
-    utterance.lang = 'es-ES';
-    speechSynthesis.cancel(); // Cancelar cualquier voz anterior
-    speechSynthesis.speak(utterance);
+    const textSinEmojis = reply.replace(
+      /([\u{1F600}-\u{1F64F}]|[\u{1F300}-\u{1F5FF}]|[\u{1F680}-\u{1F6FF}]|[\u{1F700}-\u{1F77F}]|[\u{1F780}-\u{1F7FF}]|[\u{1F800}-\u{1F8FF}]|[\u{1F900}-\u{1F9FF}]|[\u{1FA00}-\u{1FA6F}]|[\u{1FA70}-\u{1FAFF}]|[\u{2600}-\u{26FF}])/gu,
+      ''
+    );
+
+    if (textSinEmojis.trim() !== "") {
+      const utterance = new SpeechSynthesisUtterance(textSinEmojis);
+      utterance.lang = 'es-ES';
+      speechSynthesis.cancel(); // Cancelar cualquier voz anterior
+      speechSynthesis.speak(utterance);
+    }
 
   } catch (e) {
     removeTyping();
-    const fallback = ["⚠️ La API está dormida o no responde. Intenta más tarde."][0];
+    const fallback = "⚠️ La API está dormida o no responde. Intenta más tarde.";
     addMsg(fallback, false);
     history.push({ role: "assistant", content: fallback });
   }
+
   sendBtn.disabled = false;
   chatInput.disabled = false;
   chatInput.focus();
 }
+
 
 
 chatForm.addEventListener("submit", e => { e.preventDefault(); const t = chatInput.value.trim(); if (!t) return; chatInput.value = ""; send(t); });
