@@ -53,8 +53,9 @@ async function send(text) {
     addMsg(reply, false);
     history.push({ role: "assistant", content: reply });
 
-    // 🔊 Reproducir voz automáticamente
-    const utterance = new SpeechSynthesisUtterance(reply);
+    // 🔊 Reproducir voz automáticamente sin emojis
+    const textSinEmojis = reply.replace(/([\u2700-\u27BF]|[\uE000-\uF8FF]|[\uD800-\uDFFF]|[\uFE00-\uFE0F]|[\u1F300-\u1F6FF]|[\u1F900-\u1F9FF]|[\u1F1E0-\u1F1FF])/g, '');
+    const utterance = new SpeechSynthesisUtterance(textSinEmojis);
     utterance.lang = 'es-ES';
     speechSynthesis.cancel(); // Cancelar cualquier voz anterior
     speechSynthesis.speak(utterance);
