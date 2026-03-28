@@ -63,3 +63,24 @@ document.getElementById("contactForm").addEventListener("submit", e => {
   b.textContent = "¡Enviado! ✓"; b.style.background = "#22c55e";
   setTimeout(() => { b.textContent = "Enviar Mensaje"; b.style.background = ""; e.target.reset(); }, 3000);
 });
+// -------------------------
+// 🔊 Reproducir voz automática en cada respuesta
+// -------------------------
+function speak(text) {
+  if (!text) return;
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.lang = 'es-ES'; // Idioma español
+  speechSynthesis.speak(utterance);
+}
+
+// Modificar la función addMsg para reproducir voz cuando sea mensaje de bot
+function addMsg(text, isUser) {
+  const d = document.createElement("div");
+  d.className = "message " + (isUser ? "user-message" : "bot-message");
+  d.innerHTML = '<div class="message-avatar">' + (isUser ? "TÚ" : "AI") + '</div><div class="message-content"><p>' + text + '</p></div>';
+  chatMessages.appendChild(d);
+  chatMessages.scrollTop = chatMessages.scrollHeight;
+
+  // 🔊 Si es mensaje del bot, reproducir voz automáticamente
+  if (!isUser) speak(text);
+}
