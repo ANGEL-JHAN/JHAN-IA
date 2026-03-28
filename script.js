@@ -28,35 +28,49 @@ chatMessages.appendChild(d); chatMessages.scrollTop = chatMessages.scrollHeight;
 }
 function removeTyping() { const e = document.getElementById("typing"); if (e) e.remove(); }
 
+
+
 async function send(text) {
-addMsg(text, true);
-history.push({ role: "user", content: text });
-sendBtn.disabled = true; chatInput.disabled = true;
-showTyping();
-try {
-// 🔗 Aquí usamos tu propia API en Render
-const r = await fetch("https://mi-api-clnb.onrender.com/api/ia", {
-method: "POST",
-headers: { "Content-Type": "application/json", "x-api-key": API_KEY },
-body: JSON.stringify({ mensaje: text, usuario: "nestor" })
-});
+  addMsg(text, true);
+  history.push({ role: "user", content: text });
+  sendBtn.disabled = true;
+  chatInput.disabled = true;
+  showTyping();
+  try {
+    // 🔗 Aquí usamos tu propia API en Render
+    const r = await fetch("https://mi-api-clnb.onrender.com/api/ia", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "x-api-key": API_KEY },
+      body: JSON.stringify({ mensaje: text, usuario: "nestor" })
+    });
 
-if (!r.ok) throw new Error(r.status);  
+    if (!r.ok) throw new Error(r.status);
 
-const data = await r.json();  
-const reply = data.respuesta || "No hubo respuesta de la API.";  
+    const data = await r.json();
+    const reply = data.respuesta || "No hubo respuesta de la API.";
 
-removeTyping(); addMsg(reply, false);  
-history.push({ role: "assistant", content: reply });
+    removeTyping();
+    addMsg(reply, false);
+    history.push({ role: "assistant", content: reply });
 
-} catch (e) {
-removeTyping();
-const fallback = ["⚠️ La API está dormida o no responde. Intenta más tarde."][0];
-addMsg(fallback, false);
-history.push({ role: "assistant", content: fallback });
+    // 🔊 Reproducir voz automáticamente
+    const utterance = new SpeechSynthesisUtterance(reply);
+    utterance.lang = 'es-ES';
+    speechSynthesis.cancel(); // Cancelar cualquier voz anterior
+    speechSynthesis.speak(utterance);
+
+  } catch (e) {
+    removeTyping();
+    const fallback = ["⚠️ La API está dormida o no responde. Intenta más tarde."][0];
+    addMsg(fallback, false);
+    history.push({ role: "assistant", content: fallback });
+  }
+  sendBtn.disabled = false;
+  chatInput.disabled = false;
+  chatInput.focus();
 }
-sendBtn.disabled = false; chatInput.disabled = false; chatInput.focus();
-}
+
+
 chatForm.addEventListener("submit", e => { e.preventDefault(); const t = chatInput.value.trim(); if (!t) return; chatInput.value = ""; send(t); });
 document.getElementById("contactForm").addEventListener("submit", e => {
 e.preventDefault(); const b = e.target.querySelector("button");
