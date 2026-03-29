@@ -63,11 +63,15 @@ function speakTextClean(text) {
 function addMsg(text, isUser) {
   const d = document.createElement("div");
   d.className = "message " + (isUser ? "user-message" : "bot-message");
-  d.innerHTML = '<div class="message-avatar">' + (isUser ? "TÚ" : "AI") + '</div><div class="message-content"><p>' + text + '</p></div>';
+  d.innerHTML = `
+    <div class="message-avatar">
+      ${isUser ? "TÚ" : '<img src="img.jpg" alt="AI Bot" style="width:40px; height:40px; object-fit:cover; border-radius:50%;">'}
+    </div>
+    <div class="message-content"><p>${text}</p></div>
+  `;
   chatMessages.appendChild(d);
   chatMessages.scrollTop = chatMessages.scrollHeight;
 
-  // 🔊 Solo voz limpia si es respuesta de AI
   if (!isUser) {
     setTimeout(() => speakTextClean(text), 100);
   }
