@@ -27,6 +27,10 @@ if(localStorage.getItem('loggedIn') !== 'true'){
                 <a href="#JHAN-IA" class="nav-link">JHAN-IA</a>
                 <a href="#planes" class="nav-link">Planes</a>
                 <a href="#contacto" class="nav-link">Contacto</a>
+<div id="profile-menu" style="display:inline-block; margin-left:20px;">
+        <span id="user-name"></span>
+        <button id="logout-btn">Cerrar sesión</button>
+    </div>
             </div>
             <button class="nav-cta" onclick="document.getElementById('demo').scrollIntoView({behavior:'smooth'})">Probar Bot</button>
             <button class="hamburger" id="hamburger" aria-label="Menú"><span></span><span></span><span></span></button>
