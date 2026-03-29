@@ -21,27 +21,27 @@
 // 🔹 Toggle Login/Signup Cards
 // ============================
 function showSignup(e){
-    e.preventDefault();
+    if(e) e.preventDefault();
     document.getElementById('loginCard').classList.add('hidden');
     document.getElementById('signupCard').classList.remove('hidden');
 }
 function showLogin(e){
-    e.preventDefault();
+    if(e) e.preventDefault();
     document.getElementById('signupCard').classList.add('hidden');
     document.getElementById('loginCard').classList.remove('hidden');
 }
 
 // ============================
-// 🔹 Toggle Password
+// 🔹 Toggle Password Visibility
 // ============================
 function togglePassword(id,btn){
     const inp = document.getElementById(id);
-    inp.type = inp.type==='password'?'text':'password';
-    btn.style.color = inp.type==='text'?'#00e5ff':'';
+    inp.type = inp.type==='password' ? 'text' : 'password';
+    btn.style.color = inp.type==='text' ? '#00e5ff' : '';
 }
 
 // ============================
-// 🔹 Toast
+// 🔹 Toast Notification
 // ============================
 function showToast(msg,type){
     const t=document.getElementById('toast');
@@ -56,7 +56,7 @@ function showToast(msg,type){
 const API_URL = "https://database-2poz.onrender.com";
 
 // ============================
-// 🔹 Signup
+// 🔹 Signup Form
 // ============================
 document.getElementById('signupForm').addEventListener('submit', async function(e){
     e.preventDefault();
@@ -77,7 +77,7 @@ document.getElementById('signupForm').addEventListener('submit', async function(
         const data = await res.json();
         if(res.ok){
             showToast('¡Cuenta creada! ✅','success');
-            setTimeout(()=>showLogin(new MouseEvent('click')),1500);
+            setTimeout(()=>showLogin(),1500);
         } else {
             showToast(data.error||'Error al registrarse','error');
         }
@@ -88,7 +88,7 @@ document.getElementById('signupForm').addEventListener('submit', async function(
 });
 
 // ============================
-// 🔹 Login
+// 🔹 Login Form
 // ============================
 document.getElementById('loginForm').addEventListener('submit', async function(e){
     e.preventDefault();
@@ -118,14 +118,19 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
 });
 
 // ============================
-// 🔹 Redirigir si ya está logueado
+// 🔹 Inicializar Página
 // ============================
 document.addEventListener('DOMContentLoaded',()=>{
-    const session=JSON.parse(localStorage.getItem('user_session'));
+    const session = JSON.parse(localStorage.getItem('user_session'));
+
+    // Si ya está logueado, redirige
     if(session?.logged){
         window.location.href='index.html';
-    } else {
-        document.getElementById('loginCard').classList.remove('hidden');
-        document.getElementById('signupCard').classList.add('hidden');
+        return;
     }
+
+    // Mostrar el formulario deseado al inicio
+    // Cambia a showSignup() si quieres que aparezca primero el registro
+    showLogin();
+    // showSignup();
 });
