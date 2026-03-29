@@ -56,6 +56,19 @@ function addMsg(text, isUser) {
   d.innerHTML = '<div class="message-avatar">' + (isUser ? "TÚ" : "AI") + '</div><div class="message-content"><p>' + text + '</p></div>';
   chatMessages.appendChild(d);
   chatMessages.scrollTop = chatMessages.scrollHeight;
+
+  // 🔊 Si es mensaje del bot, hablarlo
+  if (!isUser) speakText(text);
+}
+
+// Función para convertir texto a voz
+function speakText(text) {
+  if (!window.speechSynthesis) return; // navegador no soporta
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.lang = "es-ES"; // español
+  utterance.rate = 1; // velocidad
+  utterance.pitch = 1; // tono
+  window.speechSynthesis.speak(utterance);
 }
 
 // Mostrar indicador de escritura
