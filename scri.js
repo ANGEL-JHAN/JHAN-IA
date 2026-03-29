@@ -141,6 +141,7 @@ document.getElementById('signupForm').addEventListener('submit', async function(
   btn.disabled=true;
 
   try {
+    // Registrar usuario
     const res = await fetch('https://database-2poz.onrender.com/register', {
       method:'POST',
       headers:{'Content-Type':'application/json'},
@@ -149,14 +150,30 @@ document.getElementById('signupForm').addEventListener('submit', async function(
     const data = await res.json();
 
     if(res.ok){
-      localStorage.setItem('user_session', JSON.stringify({
-        id: data.id || 0,
-        email: email,
-        logged:true
-      }));
-      showToast('¡Cuenta creada y logueada!','success');
-      btn.innerHTML='<span>✓ Registrado</span>';
-      setTimeout(()=>{ window.location.href='index.html'; }, 1000);
+      // Login automático después del registro para obtener ID real
+      const loginRes = await fetch('https://database-2poz.onrender.com/login', {
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({email, password:pass})
+      });
+      const loginData = await loginRes.json();
+
+      if(loginRes.ok){
+        localStorage.setItem('user_session', JSON.stringify({
+          id: loginData.user.id,
+          email: loginData.user.email,
+          plan: loginData.user.plan,
+          logged:true
+        }));
+        showToast('¡Cuenta creada y logueada!','success');
+        btn.innerHTML='<span>✓ Registrado</span>';
+        setTimeout(()=>{ window.location.href='index.html'; }, 1000);
+      } else {
+        showToast(loginData.error,'error');
+        btn.innerHTML='<span>Crear Cuenta</span>';
+        btn.disabled=false;
+      }
+
     } else {
       showToast(data.error,'error');
       btn.innerHTML='<span>Crear Cuenta</span>';
