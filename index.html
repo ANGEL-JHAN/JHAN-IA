@@ -7,29 +7,13 @@
     <meta name="description" content="Chatbot inteligente con IA creado por ANGEL OFC">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Rajdhani:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <nav class="navbar" id="navbar">
         <div class="nav-container">
             <div class="nav-logo">
-                <div class="logo-icon">
-                    <svg viewBox="0 0 40 40" fill="none">
-                        <circle cx="20" cy="20" r="18" stroke="url(#g1)" stroke-width="2"/>
-                        <circle cx="20" cy="20" r="8" fill="url(#g1)" opacity="0.6"/>
-                        <circle cx="20" cy="20" r="3" fill="#0ff"/>
-                        <line x1="20" y1="2" x2="20" y2="10" stroke="#0ff" stroke-width="1.5" opacity="0.5"/>
-                        <line x1="20" y1="30" x2="20" y2="38" stroke="#0ff" stroke-width="1.5" opacity="0.5"/>
-                        <line x1="2" y1="20" x2="10" y2="20" stroke="#a855f7" stroke-width="1.5" opacity="0.5"/>
-                        <line x1="30" y1="20" x2="38" y2="20" stroke="#a855f7" stroke-width="1.5" opacity="0.5"/>
-                        <defs>
-                            <linearGradient id="g1" x1="0" y1="0" x2="40" y2="40">
-                                <stop stop-color="#0ff"/>
-                                <stop offset="1" stop-color="#a855f7"/>
-                            </linearGradient>
-                        </defs>
-                    </svg>
-                </div>
+                <div class="logo-icon"><svg viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="18" stroke="url(#g1)" stroke-width="2"/><circle cx="20" cy="20" r="8" fill="url(#g1)" opacity="0.6"/><circle cx="20" cy="20" r="3" fill="#0ff"/><line x1="20" y1="2" x2="20" y2="10" stroke="#0ff" stroke-width="1.5" opacity="0.5"/><line x1="20" y1="30" x2="20" y2="38" stroke="#0ff" stroke-width="1.5" opacity="0.5"/><line x1="2" y1="20" x2="10" y2="20" stroke="#a855f7" stroke-width="1.5" opacity="0.5"/><line x1="30" y1="20" x2="38" y2="20" stroke="#a855f7" stroke-width="1.5" opacity="0.5"/><defs><linearGradient id="g1" x1="0" y1="0" x2="40" y2="40"><stop stop-color="#0ff"/><stop offset="1" stop-color="#a855f7"/></linearGradient></defs></svg></div>
                 <span class="logo-text">AI Bot</span>
             </div>
             <div class="nav-links" id="navLinks">
@@ -43,159 +27,61 @@
             <button class="hamburger" id="hamburger" aria-label="Menú"><span></span><span></span><span></span></button>
         </div>
     </nav>
-
-    <!-- Sección Inicio -->
     <section id="inicio" class="hero">
-        <div class="hero-bg">
-            <div class="grid-bg"></div>
-            <div class="glow glow-1"></div>
-            <div class="glow glow-2"></div>
-            <div class="particles" id="particles"></div>
-        </div>
+        <div class="hero-bg"><div class="grid-bg"></div><div class="glow glow-1"></div><div class="glow glow-2"></div><div class="particles" id="particles"></div></div>
         <div class="hero-content animate-on-scroll">
             <div class="hero-badge"><span class="badge-dot"></span>By ANGEL OFC — Inteligencia Artificial</div>
             <h1 class="hero-title"><span>Tu Asistente</span><span class="gradient-text">Inteligente</span></h1>
             <p class="hero-desc">Chatbot potenciado con IA que responde, aprende y se adapta. Experiencia conversacional del futuro.</p>
-            <div class="hero-buttons">
-                <a href="#demo" class="btn btn-primary">Probar Ahora</a>
-                <a href="#funciones" class="btn btn-glass">Ver Funciones</a>
-            </div>
-            <div class="hero-stats">
-                <div class="stat"><span class="stat-num">99.9%</span><span class="stat-label">Uptime</span></div>
-                <div class="stat"><span class="stat-num">&lt;1s</span><span class="stat-label">Respuesta</span></div>
-                <div class="stat"><span class="stat-num">24/7</span><span class="stat-label">Disponible</span></div>
-            </div>
+            <div class="hero-buttons"><a href="#demo" class="btn btn-primary">Probar Ahora</a><a href="#funciones" class="btn btn-glass">Ver Funciones</a></div>
+            <div class="hero-stats"><div class="stat"><span class="stat-num">99.9%</span><span class="stat-label">Uptime</span></div><div class="stat"><span class="stat-num">&lt;1s</span><span class="stat-label">Respuesta</span></div><div class="stat"><span class="stat-num">24/7</span><span class="stat-label">Disponible</span></div></div>
         </div>
     </section>
-
-    <!-- Sección Funciones -->
     <section id="funciones" class="section">
         <div class="container">
-            <div class="section-header animate-on-scroll">
-                <span class="section-tag">Funciones</span>
-                <h2 class="section-title">Capacidades <span class="gradient-text">Avanzadas</span></h2>
-                <p class="section-desc">Tecnología de última generación para una experiencia sin límites</p>
-            </div>
+            <div class="section-header animate-on-scroll"><span class="section-tag">Funciones</span><h2 class="section-title">Capacidades <span class="gradient-text">Avanzadas</span></h2><p class="section-desc">Tecnología de última generación para una experiencia sin límites</p></div>
             <div class="features-grid">
-                <!-- Tarjetas de Funciones -->
-                <!-- IA Contextual -->
-                <div class="feature-card animate-on-scroll">
-                    <div class="feature-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M12 2a7 7 0 0 1 7 7c0 3-2 5-4 6v1a2 2 0 0 1-2 2h-2a2 2 0 0 1-2-2v-1c-2-1-4-3-4-6a7 7 0 0 1 7-7z"/>
-                            <line x1="10" y1="20" x2="14" y2="20"/>
-                            <line x1="10" y1="22" x2="14" y2="22"/>
-                        </svg>
-                    </div>
-                    <h3>IA Contextual</h3>
-                    <p>Entiende el contexto de la conversación y responde de forma coherente y natural.</p>
-                </div>
-                <!-- Respuestas Instantáneas -->
-                <div class="feature-card animate-on-scroll">
-                    <div class="feature-icon icon-purple">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
-                        </svg>
-                    </div>
-                    <h3>Respuestas Instantáneas</h3>
-                    <p>Procesamiento ultrarrápido con tiempos de respuesta menores a un segundo.</p>
-                </div>
-                <!-- Resto de funciones igual que tu HTML original -->
+                <div class="feature-card animate-on-scroll"><div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a7 7 0 0 1 7 7c0 3-2 5-4 6v1a2 2 0 0 1-2 2h-2a2 2 0 0 1-2-2v-1c-2-1-4-3-4-6a7 7 0 0 1 7-7z"/><line x1="10" y1="20" x2="14" y2="20"/><line x1="10" y1="22" x2="14" y2="22"/></svg></div><h3>IA Contextual</h3><p>Entiende el contexto de la conversación y responde de forma coherente y natural.</p></div>
+                <div class="feature-card animate-on-scroll"><div class="feature-icon icon-purple"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div><h3>Respuestas Instantáneas</h3><p>Procesamiento ultrarrápido con tiempos de respuesta menores a un segundo.</p></div>
+                <div class="feature-card animate-on-scroll"><div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div><h3>Multi-Plataforma</h3><p>Funciona en cualquier dispositivo: web, móvil y escritorio sin configuración.</p></div>
+                <div class="feature-card animate-on-scroll"><div class="feature-icon icon-purple"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><h3>Seguro y Privado</h3><p>Cifrado end-to-end. Tus conversaciones son completamente privadas.</p></div>
+                <div class="feature-card animate-on-scroll"><div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></div><h3>Personalizable</h3><p>Configura el tono, idioma y personalidad del bot según tus necesidades.</p></div>
+                <div class="feature-card animate-on-scroll"><div class="feature-icon icon-purple"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div><h3>Analíticas en Vivo</h3><p>Dashboard con métricas en tiempo real de uso, satisfacción y rendimiento.</p></div>
             </div>
         </div>
     </section>
-
-    <!-- Sección Demo Chat -->
     <section id="demo" class="section section-dark">
         <div class="container">
-            <div class="section-header animate-on-scroll">
-                <span class="section-tag">Demo</span>
-                <h2 class="section-title">Prueba el <span class="gradient-text">ChatBot</span></h2>
-                <p class="section-desc">Escribe un mensaje y experimenta la IA en acción</p>
-            </div>
+            <div class="section-header animate-on-scroll"><span class="section-tag">Demo</span><h2 class="section-title">Prueba el <span class="gradient-text">ChatBot</span></h2><p class="section-desc">Escribe un mensaje y experimenta la IA en acción</p></div>
             <div class="chat-wrapper animate-on-scroll">
                 <div class="chat-container">
-                    <div class="chat-header">
-                        <div class="chat-status"><span class="status-dot"></span>AI Bot Online</div>
-                        <span class="chat-model">GPT • ANGEL OFC</span>
-                    </div>
-                    <div class="chat-messages" id="chatMessages">
-                        <div class="message bot-message">
-                            <div class="message-avatar">AI</div>
-                            <div class="message-content">
-                                <p>¡Hola! Soy el AI Bot de <strong>ANGEL OFC</strong>. ¿En qué puedo ayudarte hoy? 🚀</p>
-                            </div>
-                        </div>
-                    </div>
-                    <form class="chat-input-area" id="chatForm">
-                        <input type="text" id="chatInput" placeholder="Escribe tu mensaje..." autocomplete="off">
-                        <button type="submit" class="send-btn" id="sendBtn">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <line x1="22" y1="2" x2="11" y2="13"/>
-                                <polygon points="22 2 15 22 11 13 2 9 22 2"/>
-                            </svg>
-                        </button>
-                    </form>
+                    <div class="chat-header"><div class="chat-status"><span class="status-dot"></span>AI Bot Online</div><span class="chat-model">GPT • ANGEL OFC</span></div>
+                    <div class="chat-messages" id="chatMessages"><div class="message bot-message"><div class="message-avatar">AI</div><div class="message-content"><p>¡Hola! Soy el AI Bot de <strong>ANGEL OFC</strong>. ¿En qué puedo ayudarte hoy? 🚀</p></div></div></div>
+                    <form class="chat-input-area" id="chatForm"><input type="text" id="chatInput" placeholder="Escribe tu mensaje..." autocomplete="off"><button type="submit" class="send-btn" id="sendBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></button></form>
                 </div>
             </div>
         </div>
     </section>
-
-    <!-- Secciones Planes y Contacto igual que tu HTML original -->
-
-    <footer class="footer">
-        <div class="container footer-inner">
-            <div class="footer-logo">
-                <div class="logo-icon" style="width:28px;height:28px">
-                    <svg viewBox="0 0 40 40" fill="none">
-                        <circle cx="20" cy="20" r="18" stroke="url(#g2)" stroke-width="2"/>
-                        <circle cx="20" cy="20" r="5" fill="#0ff" opacity="0.6"/>
-                        <defs>
-                            <linearGradient id="g2" x1="0" y1="0" x2="40" y2="40">
-                                <stop stop-color="#0ff"/>
-                                <stop offset="1" stop-color="#a855f7"/>
-                            </linearGradient>
-                        </defs>
-                    </svg>
-                </div>
-                <span class="logo-text" style="font-size:0.9rem">AI Bot</span>
+    <section id="planes" class="section">
+        <div class="container">
+            <div class="section-header animate-on-scroll"><span class="section-tag">Planes</span><h2 class="section-title">Elige tu <span class="gradient-text">Plan</span></h2><p class="section-desc">Soluciones flexibles para cada necesidad</p></div>
+            <div class="plans-grid">
+                <div class="plan-card animate-on-scroll"><h3>Starter</h3><div class="plan-price">$0<span>/mes</span></div><ul class="plan-features"><li>100 mensajes/día</li><li>Respuestas básicas</li><li>1 idioma</li><li>Soporte por email</li></ul><a href="#contacto" class="btn btn-glass btn-full">Comenzar Gratis</a></div>
+                <div class="plan-card plan-featured animate-on-scroll"><div class="plan-badge">Popular</div><h3>Pro</h3><div class="plan-price">$29<span>/mes</span></div><ul class="plan-features"><li>Mensajes ilimitados</li><li>IA avanzada</li><li>Multi-idioma</li><li>Analíticas</li><li>Soporte prioritario</li></ul><a href="#contacto" class="btn btn-primary btn-full">Elegir Pro</a></div>
+                <div class="plan-card animate-on-scroll"><h3>Enterprise</h3><div class="plan-price">Custom</div><ul class="plan-features"><li>Todo de Pro</li><li>API dedicada</li><li>SLA garantizado</li><li>Soporte 24/7</li><li>Personalización total</li></ul><a href="#contacto" class="btn btn-glass btn-full">Contactar</a></div>
             </div>
-            <p>© 2025 AI Bot — By <span style="color:#0ff;font-weight:600">ANGEL OFC</span>. Todos los derechos reservados.</p>
         </div>
-    </footer>
-
-    <!-- Scripts -->
+    </section>
+    <section id="contacto" class="section section-dark">
+        <div class="container">
+            <div class="section-header animate-on-scroll"><span class="section-tag">Contacto</span><h2 class="section-title">Hablemos de tu <span class="gradient-text">Proyecto</span></h2><p class="section-desc">Estamos listos para implementar tu bot personalizado</p></div>
+            <div class="contact-grid">
+                <div class="contact-info animate-on-scroll"><div class="contact-item"><div class="contact-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div><div><small>Email</small><p>contact@angelofc.dev</p></div></div><div class="contact-item"><div class="contact-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div><div><small>Ubicación</small><p>Global — Remoto</p></div></div></div>
+                <form class="contact-form animate-on-scroll" id="contactForm"><input type="text" name="nombre" placeholder="Tu nombre" required><input type="email" name="email" placeholder="Tu email" required><textarea name="mensaje" placeholder="Cuéntanos sobre tu proyecto..." rows="4" required></textarea><button type="submit" class="btn btn-primary btn-full">Enviar Mensaje</button></form>
+            </div>
+        </div>
+    </section>
+    <footer class="footer"><div class="container footer-inner"><div class="footer-logo"><div class="logo-icon" style="width:28px;height:28px"><svg viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="18" stroke="url(#g2)" stroke-width="2"/><circle cx="20" cy="20" r="5" fill="#0ff" opacity="0.6"/><defs><linearGradient id="g2" x1="0" y1="0" x2="40" y2="40"><stop stop-color="#0ff"/><stop offset="1" stop-color="#a855f7"/></linearGradient></defs></svg></div><span class="logo-text" style="font-size:0.9rem">AI Bot</span></div><p>© 2025 AI Bot — By <span style="color:#0ff;font-weight:600">ANGEL OFC</span>. Todos los derechos reservados.</p></div></footer>
     <script src="script.js"></script>
-    <script>
-        // 🔹 Chat funcional básico y creación de "cuenta" simulada
-        const chatForm = document.getElementById('chatForm');
-        const chatInput = document.getElementById('chatInput');
-        const chatMessages = document.getElementById('chatMessages');
-
-        chatForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const msg = chatInput.value.trim();
-            if (!msg) return;
-
-            // Mostrar mensaje del usuario
-            const userMsg = document.createElement('div');
-            userMsg.classList.add('message', 'user-message');
-            userMsg.innerHTML = `<div class="message-avatar">Tú</div><div class="message-content"><p>${msg}</p></div>`;
-            chatMessages.appendChild(userMsg);
-            chatInput.value = '';
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-
-            // Respuesta simulada
-            setTimeout(() => {
-                const botMsg = document.createElement('div');
-                botMsg.classList.add('message', 'bot-message');
-                botMsg.innerHTML = `<div class="message-avatar">AI</div><div class="message-content"><p>Respuesta de AI a: "${msg}"</p></div>`;
-                chatMessages.appendChild(botMsg);
-                chatMessages.scrollTop = chatMessages.scrollHeight;
-            }, 600);
-        });
-
-        // Aquí puedes agregar la lógica real de registro / login usando localStorage o tu backend
-    </script>
 </body>
 </html>
