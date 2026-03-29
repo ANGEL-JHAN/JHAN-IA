@@ -86,12 +86,12 @@ function showToast(msg,type){
 }
 
 // ============================
-// 🌐 API URL
+// 🌐 API URL (Base de datos)
 // ============================
-const API_URL = "https://mi-api-clnb.onrender.com";
+const API_URL = "https://database-2poz.onrender.com";
 
 // ============================
-// 🔹 Signup con API
+// 🔹 Signup con DB
 // ============================
 document.getElementById('signupForm').addEventListener('submit', async function(e){
     e.preventDefault();
@@ -111,7 +111,7 @@ document.getElementById('signupForm').addEventListener('submit', async function(
         const res = await fetch(`${API_URL}/register`, {
             method: "POST",
             headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({email,password:pass,name,user})
+            body: JSON.stringify({name,user,email,password:pass})
         });
         const data = await res.json();
         if(res.ok){
@@ -130,7 +130,7 @@ document.getElementById('signupForm').addEventListener('submit', async function(
 });
 
 // ============================
-// 🔹 Login con API
+// 🔹 Login con DB
 // ============================
 document.getElementById('loginForm').addEventListener('submit', async function(e){
     e.preventDefault();
@@ -167,20 +167,15 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
 });
 
 // ============================
-// 🔹 Social Logins
-// ============================
-function loginWithGoogle(){ window.location.href = `${API_URL}/login/google`; }
-function loginWithFacebook(){ window.location.href = `${API_URL}/login/facebook`; }
-function loginWithGmail(){ showToast('Gmail login no implementado','info'); }
-
-// ============================
 // 🔹 Redirigir si ya está logueado
 // ============================
 document.addEventListener('DOMContentLoaded', () => {
     const session = JSON.parse(localStorage.getItem('user_session'));
     if(session?.logged){
+        // Si ya hay sesión, ir a index
         window.location.href = 'index.html';
     } else {
+        // Si no, mostrar login
         document.getElementById('loginCard').classList.remove('hidden');
         document.getElementById('signupCard').classList.add('hidden');
     }
