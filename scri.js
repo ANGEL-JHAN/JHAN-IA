@@ -73,28 +73,14 @@ document.getElementById('signupForm').addEventListener('submit', async function(
     if(!res.ok) throw new Error('Error al crear usuario');
     const newUser = await res.json();
 
-    // Guardar usuario creado
+    // Guardar usuario creado y loguear automáticamente
     localStorage.setItem('user_data', JSON.stringify({id:newUser.id, name:newUser.name, username:newUser.username, email:newUser.email}));
-    showToast('¡Cuenta creada!','success');
+    localStorage.setItem('user_session', JSON.stringify({id:newUser.id, name:newUser.name, username:newUser.username, logged:true}));
+
+    showToast('¡Cuenta creada y logueada!','success');
     btn.innerHTML = '<span>✓ Registrado</span>';
 
-    // Loguear automáticamente
-    const loginRes = await fetch('https://database-2poz.onrender.com/users');
-    const users = await loginRes.json();
-    const loggedUser = users.find(u => (u.email === email || u.username === email) && u.password === pass);
-
-    if(!loggedUser){
-      showToast('Error al iniciar sesión','error');
-      btn.innerHTML = '<span>Iniciar Sesión</span>';
-      btn.disabled = false;
-      return;
-    }
-
-    localStorage.setItem('user_session', JSON.stringify({id:loggedUser.id, name:loggedUser.name, username:loggedUser.username, logged:true}));
-    showToast('¡Inicio de sesión exitoso!','success');
-
     // Redirigir a la web
-    btn.innerHTML = '<span>Iniciar Sesión</span>';
     btn.disabled = false;
     window.location.href = 'index.html';
 
@@ -136,7 +122,6 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
 
     localStorage.setItem('user_session', JSON.stringify({id:user.id, name:user.name, username:user.username, logged:true}));
     showToast('¡Inicio de sesión exitoso!','success');
-    btn.innerHTML = '<span>✓ Conectado</span>';
 
     btn.innerHTML = '<span>Iniciar Sesión</span>';
     btn.disabled = false;
@@ -149,14 +134,3 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
     btn.disabled = false;
   }
 });
-
-// ===================== OAUTH =====================
-function loginWithFacebook(){
-  showToast('Conectando con Facebook...','info');
-  setTimeout(function(){showToast('¡Conectado con Facebook!','success')},1500);
-}
-
-function loginWithGmail(){
-  showToast('Conectando con Gmail...','info');
-  setTimeout(function(){showToast('¡Conectado con Gmail!','success')},1500);
-}
