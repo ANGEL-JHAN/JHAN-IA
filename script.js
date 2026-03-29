@@ -69,6 +69,27 @@ function addMsg(text, isUser) {
   }
 }
 
+// 🔊 Función para hablar solo texto limpio (sin emojis ni símbolos)
+function speakTextClean(text) {
+  // Filtra solo letras, números y signos de puntuación básicos
+  const clean = text.replace(/[^\w\s.,!?¿¡]/g, ""); 
+  if (!clean) return; // nada que decir
+  if (!window.speechSynthesis) return;
+
+  window.speechSynthesis.cancel();
+  const utterance = new SpeechSynthesisUtterance(clean);
+  utterance.lang = "es-ES";
+  utterance.rate = 1;
+  utterance.pitch = 1;
+  window.speechSynthesis.speak(utterance);
+}
+
+// 🔄 Reemplaza la llamada anterior a speakText con speakTextClean
+// Por ejemplo, en addMsg:
+if (!isUser) {
+  setTimeout(() => speakTextClean(text), 100);
+}
+
 function showTyping() {
   const d = document.createElement("div");
   d.className = "message bot-message";
