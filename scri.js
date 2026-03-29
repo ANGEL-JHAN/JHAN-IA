@@ -40,7 +40,7 @@ function togglePassword(id,btn){
   btn.style.color=inp.type==='text'?'#00e5ff':'';
 }
 
-document.getElementById('signupPassword').addEventListener('input',function(){
+document.getElementById('signupPassword').addEventListener('input', function(){
   var v=this.value,
       fill=document.getElementById('strengthFill'),
       txt=document.getElementById('strengthText'),
@@ -73,18 +73,23 @@ function showToast(msg,type){
 // ===================== LOGIN =====================
 document.getElementById('loginForm').addEventListener('submit', async function(e){
   e.preventDefault();
+
   var email=document.getElementById('loginEmail').value.trim(),
       pass=document.getElementById('loginPassword').value;
-  if(!email||!pass) return showToast('Completa todos los campos','error');
+
+  if(!email || !pass){
+    showToast('Completa todos los campos','error');
+    return;
+  }
 
   var btn=this.querySelector('.btn-primary');
   btn.innerHTML='<span>Verificando...</span>';
   btn.disabled=true;
 
-  try{
-    const res=await fetch('https://database-2poz.onrender.com/users');
-    const users=await res.json();
-    const user=users.find(u=>(u.email===email||u.username===email)&&u.password===pass);
+  try {
+    const res = await fetch('https://database-2poz.onrender.com/users');
+    const users = await res.json();
+    const user = users.find(u => (u.email===email || u.username===email) && u.password===pass);
 
     if(!user){
       showToast('Usuario o contraseña incorrecta','error');
@@ -93,13 +98,18 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
       return;
     }
 
-    localStorage.setItem('user_session',JSON.stringify({id:user.id,name:user.name,username:user.username,logged:true}));
+    localStorage.setItem('user_session', JSON.stringify({
+      id:user.id,
+      name:user.name,
+      username:user.username,
+      logged:true
+    }));
     showToast('¡Inicio de sesión exitoso!','success');
     btn.innerHTML='<span>Iniciar Sesión</span>';
     btn.disabled=false;
     window.location.href='index.html';
 
-  }catch(err){
+  } catch(err){
     console.error(err);
     showToast('Error al conectar con la DB','error');
     btn.innerHTML='<span>Iniciar Sesión</span>';
@@ -110,41 +120,56 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
 // ===================== SIGNUP =====================
 document.getElementById('signupForm').addEventListener('submit', async function(e){
   e.preventDefault();
+
   var name=document.getElementById('signupName').value.trim(),
       user=document.getElementById('signupUser').value.trim(),
       email=document.getElementById('signupEmail').value.trim(),
       pass=document.getElementById('signupPassword').value;
 
-  if(!name||!user||!email||!pass) return showToast('Completa todos los campos','error');
-  if(pass.length<8) return showToast('Mínimo 8 caracteres','error');
+  if(!name || !user || !email || !pass){
+    showToast('Completa todos los campos','error');
+    return;
+  }
+  if(pass.length<8){
+    showToast('Mínimo 8 caracteres','error');
+    return;
+  }
 
   var btn=this.querySelector('.btn-primary');
   btn.innerHTML='<span>Creando cuenta...</span>';
   btn.disabled=true;
 
-  try{
-    // Crear usuario en DB
-    const res=await fetch('https://database-2poz.onrender.com/users',{
+  try {
+    // Crear usuario en la DB
+    const res = await fetch('https://database-2poz.onrender.com/users', {
       method:'POST',
       headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({name:name,username:user,email:email,password:pass})
+      body:JSON.stringify({name:name, username:user, email:email, password:pass})
     });
 
     if(!res.ok) throw new Error('Error al crear usuario');
-    const newUser=await res.json();
+    const newUser = await res.json();
 
-    // Guardar en localStorage y loguear
-    localStorage.setItem('user_data',JSON.stringify({id:newUser.id,name:newUser.name,username:newUser.username,email:newUser.email}));
-    localStorage.setItem('user_session',JSON.stringify({id:newUser.id,name:newUser.name,username:newUser.username,logged:true}));
+    // Guardar en localStorage
+    localStorage.setItem('user_data', JSON.stringify({
+      id:newUser.id,
+      name:newUser.name,
+      username:newUser.username,
+      email:newUser.email
+    }));
+    localStorage.setItem('user_session', JSON.stringify({
+      id:newUser.id,
+      name:newUser.name,
+      username:newUser.username,
+      logged:true
+    }));
 
     showToast('¡Cuenta creada y logueada!','success');
     btn.innerHTML='<span>✓ Registrado</span>';
     btn.disabled=false;
-
-    // Redirigir al login o index
     window.location.href='index.html';
 
-  }catch(err){
+  } catch(err){
     console.error(err);
     showToast('Error al conectar con la DB','error');
     btn.innerHTML='<span>Crear Cuenta</span>';
@@ -152,6 +177,7 @@ document.getElementById('signupForm').addEventListener('submit', async function(
   }
 });
 
+// ===================== SOCIAL LOGIN =====================
 function loginWithGoogle(){showToast('Conectando con Google...','info');setTimeout(function(){showToast('¡Conectado con Google!','success')},1500)}
 function loginWithFacebook(){showToast('Conectando con Facebook...','info');setTimeout(function(){showToast('¡Conectado con Facebook!','success')},1500)}
 function loginWithGmail(){showToast('Conectando con Gmail...','info');setTimeout(function(){showToast('¡Conectado con Gmail!','success')},1500)}
