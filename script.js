@@ -60,3 +60,25 @@ document.getElementById("contactForm").addEventListener("submit", e => {
   b.textContent = "¡Enviado! ✓"; b.style.background = "#22c55e";
   setTimeout(() => { b.textContent = "Enviar Mensaje"; b.style.background = ""; e.target.reset(); }, 3000);
 });
+
+document.addEventListener('DOMContentLoaded', () => {
+  const session = JSON.parse(localStorage.getItem('user_session'));
+  const profileMenu = document.getElementById('profile-menu');
+  const userNameSpan = document.getElementById('user-name');
+  const logoutBtn = document.getElementById('logout-btn');
+
+  if (session?.logged) {
+    // Mostrar menú
+    profileMenu.classList.remove('hidden');
+    userNameSpan.textContent = session.user || session.name || 'Usuario';
+  } else {
+    // Ocultar menú si no está logueado
+    profileMenu.classList.add('hidden');
+  }
+
+  // Cerrar sesión
+  logoutBtn.addEventListener('click', () => {
+    localStorage.removeItem('user_session'); // Elimina sesión
+    window.location.href = 'signup.html'; // Redirige al login/signup
+  });
+});
