@@ -108,3 +108,16 @@ chatMessages.scrollTop = chatMessages.scrollHeight;
 // 🔊 Si es mensaje del bot, reproducir voz automáticamente
 if (!isUser) speak(text);
 }
+
+// Mostrar nombre de usuario en el perfil
+const username = localStorage.getItem('username');
+if (username) {
+  document.getElementById('user-name').textContent = `Hola, ${username}`;
+}
+
+// Cerrar sesión
+document.getElementById('logout-btn').addEventListener('click', () => {
+  localStorage.removeItem('loggedIn');   // elimina flag de login
+  localStorage.removeItem('username');   // elimina datos del usuario
+  window.location.href = 'signup.html';  // redirige al signup
+});
