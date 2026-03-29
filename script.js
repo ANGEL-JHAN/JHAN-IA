@@ -134,36 +134,6 @@ document.getElementById("contactForm").addEventListener("submit", e=>{
 
 // ===================== SESIÓN =====================
 function loginSuccess(username){
-  localStorage.setItem('loggedIn', 'true');
-  localStorage.setItem('username', username);
-  window.location.href = 'index.html'; // redirige al index después de login/registro
-}
-
-(function(){
-  const sessionLogged = localStorage.getItem("loggedIn");
-  const username = localStorage.getItem("username");
-
-  if(!sessionLogged){
-    if(!window.location.href.includes("signup.html")){
-      window.location.href = "signup.html"; // si no está logueado y no estás en signup, redirige
-    }
-  } else if(username){
-    const userNameEl = document.getElementById("user-name");
-    if(userNameEl) userNameEl.textContent = `Hola, ${username}`;
-  }
-
-  const logoutBtn = document.getElementById("logout-btn");
-  if(logoutBtn){
-    logoutBtn.addEventListener("click", ()=>{
-      localStorage.removeItem("loggedIn");
-      localStorage.removeItem("username");
-      window.location.href="signup.html";
-    });
-  }
-})();
-
-// ===================== SESIÓN =====================
-function loginSuccess(username){
   // Guarda sesión en localStorage
   localStorage.setItem('loggedIn', 'true');
   localStorage.setItem('username', username);
