@@ -103,3 +103,14 @@ a{text-decoration:none;color:inherit}.container{max-width:1200px;margin:0 auto;p
   background-color: #e60000;
   transform: scale(1.05);
 }
+
+/* ============================ */
+/* Ocultar Signup al inicio */
+#signupCard {
+  display: none; /* inicialmente oculto */
+}
+
+/* Cuando JS lo muestre, remover hidden */
+.auth-card.hidden {
+  display: none !important;
+}
