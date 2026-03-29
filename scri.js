@@ -153,7 +153,7 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
         if(res.ok){
             localStorage.setItem('user_session', JSON.stringify({logged:true, ...data.user}));
             showToast('¡Inicio de sesión exitoso! ✅','success');
-            setTimeout(()=>window.location.href='dashboard.html', 1000);
+            setTimeout(()=>window.location.href='index.html', 1000);
         } else {
             showToast(data.error || 'Email o contraseña incorrectos','error');
         }
