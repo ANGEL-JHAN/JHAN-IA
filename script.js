@@ -161,3 +161,7 @@ function loginSuccess(username){
     });
   }
 })();
+
+// ===================== SESIÓN =====================
+function loginSuccess(username){
+  localStorage.
