@@ -1,109 +1,62 @@
-<!-- LOGIN / SIGNUP SCRIPT -->
-<script>
-// ===================== VARIABLES =====================
 const API_KEY = "123456";
 const hamburger = document.getElementById("hamburger");
 const navLinks = document.getElementById("navLinks");
+hamburger.addEventListener("click", () => { hamburger.classList.toggle("active"); navLinks.classList.toggle("active"); });
+navLinks.querySelectorAll(".nav-link").forEach(l => l.addEventListener("click", () => { hamburger.classList.remove("active"); navLinks.classList.remove("active"); }));
+window.addEventListener("scroll", () => { document.getElementById("navbar").style.background = window.scrollY > 50 ? "rgba(8,11,20,0.95)" : "rgba(8,11,20,0.85)"; });
+(function() { const c = document.getElementById("particles"); for (let i = 0; i < 30; i++) { const p = document.createElement("div"); p.classList.add("particle"); p.style.left = Math.random()*100+"%"; p.style.animationDelay = Math.random()*8+"s"; p.style.animationDuration = (6+Math.random()*6)+"s"; c.appendChild(p); } })();
+const obs = new IntersectionObserver(entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add("visible"); }), { threshold: 0.1 });
+document.querySelectorAll(".animate-on-scroll").forEach(el => obs.observe(el));
 
-// ===================== NAVBAR =====================
-if (hamburger && navLinks) {
-  hamburger.addEventListener("click", () => {
-    hamburger.classList.toggle("active");
-    navLinks.classList.toggle("active");
-  });
+const chatMessages = document.getElementById("chatMessages");
+const chatForm = document.getElementById("chatForm");
+const chatInput = document.getElementById("chatInput");
+const sendBtn = document.getElementById("sendBtn");
+const history = [{ role: "system", content: "Eres un asistente AI creado por ANGEL OFC. Responde de forma útil y amigable en español." }];
 
-  navLinks.querySelectorAll(".nav-link").forEach(l =>
-    l.addEventListener("click", () => {
-      hamburger.classList.remove("active");
-      navLinks.classList.remove("active");
-    })
-  );
+function addMsg(text, isUser) {
+  const d = document.createElement("div");
+  d.className = "message " + (isUser ? "user-message" : "bot-message");
+  d.innerHTML = '<div class="message-avatar">' + (isUser ? "TÚ" : "AI") + '</div><div class="message-content"><p>' + text + '</p></div>';
+  chatMessages.appendChild(d);
+  chatMessages.scrollTop = chatMessages.scrollHeight;
 }
-
-window.addEventListener("scroll", () => {
-  const navbar = document.getElementById("navbar");
-  if(navbar){
-    navbar.style.background = window.scrollY > 50
-      ? "rgba(8,11,20,0.95)"
-      : "rgba(8,11,20,0.85)";
-  }
-});
-
-// ===================== PARTICULAS =====================
-(function() {
-  const c = document.getElementById("particles");
-  if(!c) return;
-  for (let i = 0; i < 30; i++) {
-    const p = document.createElement("div");
-    p.classList.add("particle");
-    p.style.left = Math.random()*100+"%";
-    p.style.animationDelay = Math.random()*8+"s";
-    p.style.animationDuration = (6+Math.random()*6)+"s";
-    c.appendChild(p);
-  }
-})();
-
-// ===================== LOGIN SUCCESS =====================
-function loginSuccess(username){
-  // Guarda la sesión
-  localStorage.setItem('loggedIn', 'true');
-  localStorage.setItem('username', username);
-
-  // Redirige al index.html
-  window.location.href = 'index.html';
+function showTyping() {
+  const d = document.createElement("div"); d.className = "message bot-message"; d.id = "typing";
+  d.innerHTML = '<div class="message-avatar">AI</div><div class="typing-indicator"><span></span><span></span><span></span></div>';
+  chatMessages.appendChild(d); chatMessages.scrollTop = chatMessages.scrollHeight;
 }
+function removeTyping() { const e = document.getElementById("typing"); if (e) e.remove(); }
 
-// ===================== COMPROBAR SESIÓN =====================
-(function(){
-  const sessionLogged = localStorage.getItem("loggedIn");
-  const username = localStorage.getItem("username");
-  const currentPage = window.location.href;
-
-  // Si no hay sesión y no estás en signup o login → ir a signup
-  if(!sessionLogged && !currentPage.includes("signup.html") && !currentPage.includes("login.html")){
-    window.location.href = "signup.html";
-  }
-
-  // Si hay sesión y estás en login o signup → ir a index
-  if(sessionLogged && (currentPage.includes("signup.html") || currentPage.includes("login.html"))){
-    window.location.href = "index.html";
-  }
-
-  // Mostrar nombre en navbar si hay sesión
-  const userNameEl = document.getElementById("user-name");
-  if(username && userNameEl){
-    userNameEl.textContent = `Hola, ${username}`;
-  }
-
-  // Botón logout
-  const logoutBtn = document.getElementById("logout-btn");
-  if(logoutBtn){
-    logoutBtn.addEventListener("click", ()=>{
-      localStorage.removeItem("loggedIn");
-      localStorage.removeItem("username");
-      window.location.href="signup.html";
+async function send(text) {
+  addMsg(text, true);
+  history.push({ role: "user", content: text });
+  sendBtn.disabled = true; chatInput.disabled = true;
+  showTyping();
+  try {
+    const r = await fetch("https://api.openai.com/v1/chat/completions", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "Authorization": "Bearer " + API_KEY },
+      body: JSON.stringify({ model: "gpt-3.5-turbo", messages: history, max_tokens: 500, temperature: 0.7 })
     });
+    if (!r.ok) throw new Error(r.status);
+    const data = await r.json();
+    const reply = data.choices[0].message.content.trim();
+    removeTyping(); addMsg(reply, false);
+    history.push({ role: "assistant", content: reply });
+  } catch (e) {
+    removeTyping();
+    const fallback = ["¡Interesante! Estoy en modo demo. Conecta tu API real para respuestas con IA completa. 🤖",
+      "Soy el bot de ANGEL OFC en modo demo. Configura tu API key para activar la IA. 🚀",
+      "¡Gracias por probarme! Para respuestas reales, cambia la API key en script.js. ⚡"][Math.floor(Math.random()*3)];
+    addMsg(fallback, false);
+    history.push({ role: "assistant", content: fallback });
   }
-})();
-
-// ===================== FORMULARIO LOGIN / SIGNUP =====================
-const loginForm = document.getElementById("loginForm");
-if(loginForm){
-  loginForm.addEventListener("submit", e=>{
-    e.preventDefault();
-    const username = e.target.querySelector("input[name='username']").value.trim();
-    if(!username) return alert("Ingresa tu usuario");
-    loginSuccess(username); // Aquí llamamos a la función
-  });
+  sendBtn.disabled = false; chatInput.disabled = false; chatInput.focus();
 }
-
-const signupForm = document.getElementById("signupForm");
-if(signupForm){
-  signupForm.addEventListener("submit", e=>{
-    e.preventDefault();
-    const username = e.target.querySelector("input[name='username']").value.trim();
-    if(!username) return alert("Ingresa tu usuario");
-    loginSuccess(username); // Aquí llamamos a la función
-  });
-}
-</script>
+chatForm.addEventListener("submit", e => { e.preventDefault(); const t = chatInput.value.trim(); if (!t) return; chatInput.value = ""; send(t); });
+document.getElementById("contactForm").addEventListener("submit", e => {
+  e.preventDefault(); const b = e.target.querySelector("button");
+  b.textContent = "¡Enviado! ✓"; b.style.background = "#22c55e";
+  setTimeout(() => { b.textContent = "Enviar Mensaje"; b.style.background = ""; e.target.reset(); }, 3000);
+});
