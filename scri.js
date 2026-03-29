@@ -163,8 +163,16 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
 function loginWithGoogle(){window.location.href=`${API_URL}/login/google`;}
 function loginWithFacebook(){window.location.href=`${API_URL}/login/facebook`;}
 function loginWithGmail(){showToast('Gmail login no implementado','info');}
-// Redirigir si ya está logueado
-const session = JSON.parse(localStorage.getItem('user_session'));
-if(session?.logged) {
-    window.location.href = 'index.html';
-}
+
+// Mostrar login o redirigir si ya está logueado
+document.addEventListener('DOMContentLoaded', () => {
+    const session = JSON.parse(localStorage.getItem('user_session'));
+    if(session?.logged){
+        // Si ya está logueado, vamos al dashboard
+        window.location.href = 'dashboard.html';
+    } else {
+        // Si no hay sesión, mostrar la tarjeta de login
+        document.getElementById('loginCard').classList.remove('hidden');
+        document.getElementById('signupCard').classList.add('hidden');
+    }
+});
