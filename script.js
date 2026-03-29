@@ -82,7 +82,12 @@ function showTyping() {
   const d = document.createElement("div");
   d.className = "message bot-message";
   d.id = "typing";
-  d.innerHTML = '<div class="message-avatar">AI</div><div class="typing-indicator"><span></span><span></span><span></span></div>';
+  d.innerHTML = `
+    <div class="message-avatar">
+      <img src="img.jpg" alt="AI Bot" style="width:40px; height:40px; object-fit:cover; border-radius:50%;">
+    </div>
+    <div class="typing-indicator"><span></span><span></span><span></span></div>
+  `;
   chatMessages.appendChild(d);
   chatMessages.scrollTop = chatMessages.scrollHeight;
 }
