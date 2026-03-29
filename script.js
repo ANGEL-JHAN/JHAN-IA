@@ -45,33 +45,8 @@ const chatInput = document.getElementById("chatInput");
 const sendBtn = document.getElementById("sendBtn");
 const history = [{ role: "system", content: "Eres un asistente AI creado por ANGEL OFC. Responde de forma útil y amigable en español." }];
 
-// 🔊 Función para hablar texto
-function speakText(text) {
-  if (!window.speechSynthesis) return;
-  window.speechSynthesis.cancel(); // cancelar cualquier voz pendiente
-  const utterance = new SpeechSynthesisUtterance(text);
-  utterance.lang = "es-ES"; // español
-  utterance.rate = 1;
-  utterance.pitch = 1;
-  window.speechSynthesis.speak(utterance);
-}
-
-function addMsg(text, isUser) {
-  const d = document.createElement("div");
-  d.className = "message " + (isUser ? "user-message" : "bot-message");
-  d.innerHTML = '<div class="message-avatar">' + (isUser ? "TÚ" : "AI") + '</div><div class="message-content"><p>' + text + '</p></div>';
-  chatMessages.appendChild(d);
-  chatMessages.scrollTop = chatMessages.scrollHeight;
-
-  // 🔊 Hablar solo si es respuesta de AI
-  if (!isUser) {
-    setTimeout(() => speakText(text), 100);
-  }
-}
-
 // 🔊 Función para hablar solo texto limpio (sin emojis ni símbolos)
 function speakTextClean(text) {
-  // Filtra solo letras, números y signos de puntuación básicos
   const clean = text.replace(/[^\w\s.,!?¿¡]/g, ""); 
   if (!clean) return; // nada que decir
   if (!window.speechSynthesis) return;
@@ -84,12 +59,21 @@ function speakTextClean(text) {
   window.speechSynthesis.speak(utterance);
 }
 
-// 🔄 Reemplaza la llamada anterior a speakText con speakTextClean
-// Por ejemplo, en addMsg:
-if (!isUser) {
-  setTimeout(() => speakTextClean(text), 100);
+// Función para agregar mensaje al chat
+function addMsg(text, isUser) {
+  const d = document.createElement("div");
+  d.className = "message " + (isUser ? "user-message" : "bot-message");
+  d.innerHTML = '<div class="message-avatar">' + (isUser ? "TÚ" : "AI") + '</div><div class="message-content"><p>' + text + '</p></div>';
+  chatMessages.appendChild(d);
+  chatMessages.scrollTop = chatMessages.scrollHeight;
+
+  // 🔊 Solo voz limpia si es respuesta de AI
+  if (!isUser) {
+    setTimeout(() => speakTextClean(text), 100);
+  }
 }
 
+// Animación de "escribiendo..."
 function showTyping() {
   const d = document.createElement("div");
   d.className = "message bot-message";
@@ -145,6 +129,7 @@ async function send(text) {
   chatInput.focus();
 }
 
+// Formulario de chat
 chatForm.addEventListener("submit", e => {
   e.preventDefault();
   const t = chatInput.value.trim();
@@ -153,6 +138,7 @@ chatForm.addEventListener("submit", e => {
   send(t);
 });
 
+// Formulario de contacto
 document.getElementById("contactForm").addEventListener("submit", e => {
   e.preventDefault();
   const b = e.target.querySelector("button");
