@@ -179,7 +179,7 @@ function loginWithGmail(){ showToast('Gmail login no implementado','info'); }
 document.addEventListener('DOMContentLoaded', () => {
     const session = JSON.parse(localStorage.getItem('user_session'));
     if(session?.logged){
-        window.location.href = 'dashboard.html';
+        window.location.href = 'index.html';
     } else {
         document.getElementById('loginCard').classList.remove('hidden');
         document.getElementById('signupCard').classList.add('hidden');
