@@ -7,9 +7,12 @@
 ---
 
 ## 🌐 Demo en línea
-Puedes probar JHAN-IA directamente en tu navegador:
 
-[Probar JHAN-IA](https://jhan-ia.onrender.com)
+<p align="center">
+  <a href="https://jhan-ia.onrender.com" target="_blank" style="background-color:#e02424;color:white;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:bold;font-size:16px;">
+    JHAN-IA ACÁ
+  </a>
+</p>
 
 ---
 
