@@ -1,7 +1,9 @@
+// ===================== VARIABLES =====================
 const API_KEY = "123456";
 const hamburger = document.getElementById("hamburger");
 const navLinks = document.getElementById("navLinks");
 
+// ===================== NAVBAR =====================
 hamburger.addEventListener("click", () => {
   hamburger.classList.toggle("active");
   navLinks.classList.toggle("active");
@@ -20,8 +22,10 @@ window.addEventListener("scroll", () => {
     : "rgba(8,11,20,0.85)";
 });
 
+// ===================== PARTICULAS =====================
 (function() {
   const c = document.getElementById("particles");
+  if(!c) return;
   for (let i = 0; i < 30; i++) {
     const p = document.createElement("div");
     p.classList.add("particle");
@@ -32,6 +36,7 @@ window.addEventListener("scroll", () => {
   }
 })();
 
+// ===================== ANIMACIONES ON SCROLL =====================
 const obs = new IntersectionObserver(entries => {
   entries.forEach(e => {
     if (e.isIntersecting) e.target.classList.add("visible");
@@ -86,7 +91,7 @@ async function send(text){
     const r = await fetch("https://mi-api-clnb.onrender.com/api/ia", {
       method: "POST",
       headers: { "Content-Type": "application/json", "x-api-key": API_KEY },
-      body: JSON.stringify({ mensaje:text, usuario: localStorage.getItem('username') || "nestor" })
+      body: JSON.stringify({ mensaje:text, usuario: localStorage.getItem('username') || "Usuario" })
     });
     if(!r.ok) throw new Error(r.status);
     const data = await r.json();
@@ -128,11 +133,20 @@ document.getElementById("contactForm").addEventListener("submit", e=>{
 });
 
 // ===================== SESIÓN =====================
+function loginSuccess(username){
+  localStorage.setItem('loggedIn', 'true');
+  localStorage.setItem('username', username);
+  window.location.href = 'index.html'; // redirige al index después de login/registro
+}
+
 (function(){
   const sessionLogged = localStorage.getItem("loggedIn");
   const username = localStorage.getItem("username");
+
   if(!sessionLogged){
-    window.location.href = "signup.html";
+    if(!window.location.href.includes("signup.html")){
+      window.location.href = "signup.html"; // si no está logueado y no estás en signup, redirige
+    }
   } else if(username){
     const userNameEl = document.getElementById("user-name");
     if(userNameEl) userNameEl.textContent = `Hola, ${username}`;
