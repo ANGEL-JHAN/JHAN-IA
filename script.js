@@ -1,4 +1,7 @@
+// 🔑 API Key
 const API_KEY = "123456";
+
+// Menú hamburguesa
 const hamburger = document.getElementById("hamburger");
 const navLinks = document.getElementById("navLinks");
 
@@ -14,25 +17,26 @@ navLinks.querySelectorAll(".nav-link").forEach(l =>
   })
 );
 
+// Cambiar fondo navbar al hacer scroll
 window.addEventListener("scroll", () => {
   document.getElementById("navbar").style.background =
     window.scrollY > 50 ? "rgba(8,11,20,0.95)" : "rgba(8,11,20,0.85)";
 });
 
-// Partículas
+// Partículas animadas
 (function() {
   const c = document.getElementById("particles");
   for (let i = 0; i < 30; i++) {
     const p = document.createElement("div");
     p.classList.add("particle");
-    p.style.left = Math.random()*100+"%";
-    p.style.animationDelay = Math.random()*8+"s";
-    p.style.animationDuration = (6+Math.random()*6)+"s";
+    p.style.left = Math.random() * 100 + "%";
+    p.style.animationDelay = Math.random() * 8 + "s";
+    p.style.animationDuration = (6 + Math.random() * 6) + "s";
     c.appendChild(p);
   }
 })();
 
-// Animaciones scroll
+// Animaciones al hacer scroll
 const obs = new IntersectionObserver(entries => entries.forEach(e => {
   if (e.isIntersecting) e.target.classList.add("visible");
 }), { threshold: 0.1 });
@@ -45,6 +49,7 @@ const chatInput = document.getElementById("chatInput");
 const sendBtn = document.getElementById("sendBtn");
 const history = [{ role: "system", content: "Eres un asistente AI creado por ANGEL OFC. Responde de forma útil y amigable en español." }];
 
+// Agregar mensaje al chat
 function addMsg(text, isUser) {
   const d = document.createElement("div");
   d.className = "message " + (isUser ? "user-message" : "bot-message");
@@ -53,6 +58,7 @@ function addMsg(text, isUser) {
   chatMessages.scrollTop = chatMessages.scrollHeight;
 }
 
+// Mostrar indicador de escritura
 function showTyping() {
   const d = document.createElement("div");
   d.className = "message bot-message";
@@ -62,12 +68,13 @@ function showTyping() {
   chatMessages.scrollTop = chatMessages.scrollHeight;
 }
 
+// Quitar indicador de escritura
 function removeTyping() {
   const e = document.getElementById("typing");
   if (e) e.remove();
 }
 
-// 🔥 Aquí usamos tu API propia
+// 🔥 Enviar mensaje a tu API real
 async function send(text) {
   addMsg(text, true);
   history.push({ role: "user", content: text });
@@ -76,18 +83,19 @@ async function send(text) {
   showTyping();
 
   try {
-    const r = await fetch("https://mi-api-clnb.onrender.com/", {
+    const r = await fetch("https://mi-api-clnb.onrender.com/api/ia", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         "x-api-key": API_KEY
       },
-      body: JSON.stringify({ mensaje: text })
+      body: JSON.stringify({ mensaje: text, usuario: "usuario_web" })
     });
 
     if (!r.ok) throw new Error(r.status);
     const data = await r.json();
     const reply = data.respuesta || "🤖 No obtuve respuesta";
+
     removeTyping();
     addMsg(reply, false);
     history.push({ role: "assistant", content: reply });
@@ -98,7 +106,8 @@ async function send(text) {
       "¡Interesante! Estoy en modo demo. Conecta tu API real para respuestas con IA completa. 🤖",
       "Soy el bot de ANGEL OFC en modo demo. Configura tu API key para activar la IA. 🚀",
       "¡Gracias por probarme! Para respuestas reales, cambia la API key en script.js. ⚡"
-    ][Math.floor(Math.random()*3)];
+    ][Math.floor(Math.random() * 3)];
+
     addMsg(fallback, false);
     history.push({ role: "assistant", content: fallback });
   }
@@ -108,6 +117,7 @@ async function send(text) {
   chatInput.focus();
 }
 
+// Enviar mensaje al presionar Enter
 chatForm.addEventListener("submit", e => {
   e.preventDefault();
   const t = chatInput.value.trim();
@@ -116,6 +126,7 @@ chatForm.addEventListener("submit", e => {
   send(t);
 });
 
+// Formulario de contacto
 document.getElementById("contactForm").addEventListener("submit", e => {
   e.preventDefault();
   const b = e.target.querySelector("button");
