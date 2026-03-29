@@ -170,3 +170,15 @@ document.addEventListener('DOMContentLoaded', () => {
     window.location.href = 'signup.html';
   });
 });
+
+function showSignup(e) {
+  e.preventDefault();
+  document.getElementById('loginCard').classList.add('hidden');
+  document.getElementById('signupCard').classList.remove('hidden');
+}
+
+function showLogin(e) {
+  e.preventDefault();
+  document.getElementById('signupCard').classList.add('hidden');
+  document.getElementById('loginCard').classList.remove('hidden');
+}
