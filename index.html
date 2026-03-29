@@ -10,6 +10,11 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+<script>
+if(localStorage.getItem('loggedIn') !== 'true'){
+  window.location.href = 'login.html'; // si no está logueado, redirige
+}
+</script>
     <nav class="navbar" id="navbar">
         <div class="nav-container">
             <div class="nav-logo">
