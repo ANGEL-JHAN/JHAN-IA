@@ -1,0 +1,27 @@
+<!-- login.html -->
+<h2>Login</h2>
+<form id="loginForm">
+  <input type="text" id="username" placeholder="Usuario" required /><br>
+  <input type="password" id="password" placeholder="Contraseña" required /><br>
+  <button type="submit">Iniciar sesión</button>
+</form>
+
+<script>
+const form = document.getElementById('loginForm');
+
+form.addEventListener('submit', (e) => {
+  e.preventDefault();
+
+  const username = document.getElementById('username').value;
+  const password = document.getElementById('password').value;
+  
+  const user = JSON.parse(localStorage.getItem('user'));
+  
+  if(user && user.username === username && user.password === password){
+    localStorage.setItem('loggedIn', 'true'); // marca que está logueado
+    window.location.href = 'index.html'; // tu web principal
+  } else {
+    alert('Usuario o contraseña incorrectos');
+  }
+});
+</script>
