@@ -1,49 +1,73 @@
-# AI ChatBot — By **ANGEL OFC**
+# JHAN-IA — AI ChatBot
 
-![AI Bot Banner](img.jpg)
+![AI Bot](img.jpg)
 
-![GitHub repo size](https://img.shields.io/github/repo-size/tu-usuario/ai-chatbot?style=for-the-badge)
-![GitHub stars](https://img.shields.io/github/stars/tu-usuario/ai-chatbot?style=for-the-badge)
-![GitHub license](https://img.shields.io/github/license/tu-usuario/ai-chatbot?style=for-the-badge)
-![GitHub issues](https://img.shields.io/github/issues/tu-usuario/ai-chatbot?style=for-the-badge)
+**JHAN-IA** es un chatbot potenciado con inteligencia artificial, creado por **ANGEL OFC**. Responde, aprende y se adapta para brindar una experiencia conversacional moderna y personalizada.
 
 ---
 
-## 🚀 Descripción
+## 🌐 Demo en línea
+Puedes probar JHAN-IA directamente en tu navegador:
 
-**AI ChatBot** es un asistente inteligente potenciado por IA creado por **ANGEL OFC**.  
-Responde de forma coherente, aprende de la conversación y se adapta al contexto para brindar una experiencia conversacional del futuro.
-
-💡 Soporta voz, animaciones de escritura y avatar personalizado.
+[Probar JHAN-IA](https://jhan-ia.onrender.com)
 
 ---
 
-## 🎬 Demo en acción
+## 🚀 Características principales
 
-![ChatBot Demo](demo.gif)  
-*(Reemplaza `demo.gif` con un GIF real de tu bot en acción)*
-
-- Escribe un mensaje y observa la respuesta instantánea de la IA.  
-- Animación de “escribiendo...” con avatar del bot.  
-- Respuestas habladas con voz limpia en español.  
-
----
-
-## 🔹 Características principales
-
-| Característica | Descripción |
-|----------------|-------------|
-| **IA Contextual** | Comprende el contexto y responde de manera natural. |
-| **Respuestas Instantáneas** | Menos de 1 segundo de tiempo de respuesta. |
-| **Multi-Plataforma** | Funciona en web, móvil y escritorio. |
-| **Seguro y Privado** | Conversaciones cifradas y privadas. |
-| **Personalizable** | Configura idioma, tono y personalidad del bot. |
-| **Analíticas en Vivo** | Dashboard con métricas de uso y satisfacción. |
+- **IA Contextual**: Entiende el contexto de la conversación y responde de forma coherente y natural.
+- **Respuestas Instantáneas**: Procesamiento ultrarrápido con tiempos de respuesta menores a un segundo.
+- **Multi-Plataforma**: Funciona en cualquier dispositivo: web, móvil y escritorio sin configuración.
+- **Seguro y Privado**: Cifrado end-to-end, tus conversaciones son completamente privadas.
+- **Personalizable**: Configura el tono, idioma y personalidad del bot según tus necesidades.
+- **Analíticas en Vivo**: Dashboard con métricas en tiempo real de uso, satisfacción y rendimiento.
 
 ---
 
-## 💻 Instalación
+## 💬 Demo / ChatBot
 
-1. Clona el repositorio:  
-```bash
-git clone https://github.com/tu-usuario/ai-chatbot.git
+Interactúa con el bot directamente desde tu navegador:
+
+**Estado:** JHAN-IA Online  
+**Modelo:** JHAN-IA • ANGEL OFC
+
+> ¡Hola! Soy el AI Bot de **ANGEL OFC**. ¿En qué puedo ayudarte hoy? 🚀
+
+---
+
+## 📦 Planes disponibles
+
+| Plan | Precio | Características |
+|------|--------|----------------|
+| Starter | $0 / mes | 100 mensajes/día, respuestas básicas, 1 idioma, soporte por email |
+| Pro (Popular) | $29 / mes | Mensajes ilimitados, IA avanzada, multi-idioma, analíticas, soporte prioritario |
+| Enterprise | Custom | Todo de Pro, API dedicada, SLA garantizado, soporte 24/7, personalización total |
+
+---
+
+## 📞 Contacto
+
+Si quieres implementar tu bot personalizado o tienes preguntas:
+
+- **Email:** contact@angelofc.dev  
+- **Ubicación:** Global — Remoto
+
+Formulario de contacto disponible en la demo en línea.
+
+---
+
+## ⚡ Tecnologías utilizadas
+
+- **Frontend:** HTML, CSS, JavaScript  
+- **Backend:** Node.js / Express (API)  
+- **IA:** Modelo propio integrado con API REST  
+- **Almacenamiento:** Base de datos en línea (Render)
+
+---
+
+## 🔑 Configuración de la API
+
+Para conectar la IA con tu proyecto, configura tu `API_KEY` en `script.js`:
+
+```javascript
+const API_KEY = "TU_API_KEY";
