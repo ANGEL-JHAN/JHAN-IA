@@ -1,3 +1,35 @@
+// ===================== CONTROL DE SESIÓN =====================
+(function(){
+  const session = JSON.parse(localStorage.getItem('user_session') || '{}');
+  const currentPage = window.location.href;
+
+  // Si no hay sesión y no estás en signup/login → ir a signup
+  if(!session.logged && !currentPage.includes('signup.html') && !currentPage.includes('login.html')){
+    window.location.href = 'signup.html';
+  }
+
+  // Si hay sesión y estás en login o signup → ir a index
+  if(session.logged && (currentPage.includes('signup.html') || currentPage.includes('login.html'))){
+    window.location.href = 'index.html';
+  }
+
+  // Mostrar nombre en navbar si existe
+  const userNameEl = document.getElementById('user-name');
+  if(session.email && userNameEl){
+    userNameEl.textContent = `Hola, ${session.email}`;
+  }
+
+  // Logout
+  const logoutBtn = document.getElementById('logout-btn');
+  if(logoutBtn){
+    logoutBtn.addEventListener('click', ()=>{
+      localStorage.removeItem('user_session');
+      window.location.href='signup.html';
+    });
+  }
+})();
+
+
 (function(){
   var c=document.getElementById('particles');
   for(var i=0;i<40;i++){
