@@ -49,8 +49,14 @@ document.getElementById('signupForm').addEventListener('submit', async function(
       email = document.getElementById('signupEmail').value.trim(),
       pass = document.getElementById('signupPassword').value;
 
-  if(!name || !user || !email || !pass) return showToast('Completa todos los campos','error');
-  if(pass.length < 8) return showToast('Mínimo 8 caracteres','error');
+  if(!name || !user || !email || !pass){
+    showToast('Completa todos los campos','error');
+    return;
+  }
+  if(pass.length < 8){
+    showToast('Mínimo 8 caracteres','error');
+    return;
+  }
 
   var btn = this.querySelector('.btn-primary');
   btn.innerHTML = '<span>Creando cuenta...</span>';
@@ -61,14 +67,14 @@ document.getElementById('signupForm').addEventListener('submit', async function(
     const res = await fetch('https://database-2poz.onrender.com/users', {
       method: 'POST',
       headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({name: name, username: user, email: email, password: pass})
+      body: JSON.stringify({name, username:user, email, password:pass})
     });
 
     if(!res.ok) throw new Error('Error al crear usuario');
     const newUser = await res.json();
 
-    // Guardar en localStorage
-    localStorage.setItem('user_data', JSON.stringify({id: newUser.id, name: newUser.name, username: newUser.username, email: newUser.email}));
+    // Guardar usuario creado
+    localStorage.setItem('user_data', JSON.stringify({id:newUser.id, name:newUser.name, username:newUser.username, email:newUser.email}));
     showToast('¡Cuenta creada!','success');
     btn.innerHTML = '<span>✓ Registrado</span>';
 
@@ -84,7 +90,7 @@ document.getElementById('signupForm').addEventListener('submit', async function(
       return;
     }
 
-    localStorage.setItem('user_session', JSON.stringify({id: loggedUser.id, name: loggedUser.name, username: loggedUser.username, logged:true}));
+    localStorage.setItem('user_session', JSON.stringify({id:loggedUser.id, name:loggedUser.name, username:loggedUser.username, logged:true}));
     showToast('¡Inicio de sesión exitoso!','success');
 
     // Redirigir a la web
@@ -107,14 +113,16 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
   var email = document.getElementById('loginEmail').value.trim(),
       pass = document.getElementById('loginPassword').value;
 
-  if(!email || !pass) return showToast('Completa todos los campos','error');
+  if(!email || !pass){
+    showToast('Completa todos los campos','error');
+    return;
+  }
 
   var btn = this.querySelector('.btn-primary');
   btn.innerHTML = '<span>Verificando...</span>';
   btn.disabled = true;
 
   try {
-    // Traer usuarios de la DB
     const res = await fetch('https://database-2poz.onrender.com/users');
     const users = await res.json();
     const user = users.find(u => (u.email === email || u.username === email) && u.password === pass);
@@ -126,11 +134,10 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
       return;
     }
 
-    localStorage.setItem('user_session', JSON.stringify({id: user.id, name: user.name, username: user.username, logged:true}));
+    localStorage.setItem('user_session', JSON.stringify({id:user.id, name:user.name, username:user.username, logged:true}));
     showToast('¡Inicio de sesión exitoso!','success');
     btn.innerHTML = '<span>✓ Conectado</span>';
 
-    // Redirigir a la web
     btn.innerHTML = '<span>Iniciar Sesión</span>';
     btn.disabled = false;
     window.location.href = 'index.html';
@@ -143,13 +150,13 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
   }
 });
 
-// ===================== OAUTH / SOCIAL LOGIN =====================
+// ===================== OAUTH =====================
 function loginWithFacebook(){
   showToast('Conectando con Facebook...','info');
-  setTimeout(function(){showToast('¡Conectado con Facebook!','success')},1500)
+  setTimeout(function(){showToast('¡Conectado con Facebook!','success')},1500);
 }
 
 function loginWithGmail(){
   showToast('Conectando con Gmail...','info');
-  setTimeout(function(){showToast('¡Conectado con Gmail!','success')},1500)
+  setTimeout(function(){showToast('¡Conectado con Gmail!','success')},1500);
 }
