@@ -87,27 +87,27 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
   btn.disabled=true;
 
   try {
-    const res = await fetch('https://database-2poz.onrender.com/users');
-    const users = await res.json();
-    const user = users.find(u => (u.email===email || u.username===email) && u.password===pass);
+    const res = await fetch('https://database-2poz.onrender.com/login', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({email, password:pass})
+    });
+    const data = await res.json();
 
-    if(!user){
-      showToast('Usuario o contraseña incorrecta','error');
+    if(res.ok){
+      localStorage.setItem('user_session', JSON.stringify({
+        id: data.user.id,
+        email: data.user.email,
+        logged:true
+      }));
+      showToast('¡Inicio de sesión exitoso!','success');
+      btn.innerHTML='<span>✓ Conectado</span>';
+      setTimeout(()=>{ window.location.href='index.html'; }, 1000);
+    } else {
+      showToast(data.error,'error');
       btn.innerHTML='<span>Iniciar Sesión</span>';
       btn.disabled=false;
-      return;
     }
-
-    localStorage.setItem('user_session', JSON.stringify({
-      id:user.id,
-      name:user.name,
-      username:user.username,
-      logged:true
-    }));
-    showToast('¡Inicio de sesión exitoso!','success');
-    btn.innerHTML='<span>Iniciar Sesión</span>';
-    btn.disabled=false;
-    window.location.href='index.html';
 
   } catch(err){
     console.error(err);
@@ -140,34 +140,27 @@ document.getElementById('signupForm').addEventListener('submit', async function(
   btn.disabled=true;
 
   try {
-    // Crear usuario en la DB
-    const res = await fetch('https://database-2poz.onrender.com/users', {
+    const res = await fetch('https://database-2poz.onrender.com/register', {
       method:'POST',
       headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({name:name, username:user, email:email, password:pass})
+      body:JSON.stringify({email, password:pass})
     });
+    const data = await res.json();
 
-    if(!res.ok) throw new Error('Error al crear usuario');
-    const newUser = await res.json();
-
-    // Guardar en localStorage
-    localStorage.setItem('user_data', JSON.stringify({
-      id:newUser.id,
-      name:newUser.name,
-      username:newUser.username,
-      email:newUser.email
-    }));
-    localStorage.setItem('user_session', JSON.stringify({
-      id:newUser.id,
-      name:newUser.name,
-      username:newUser.username,
-      logged:true
-    }));
-
-    showToast('¡Cuenta creada y logueada!','success');
-    btn.innerHTML='<span>✓ Registrado</span>';
-    btn.disabled=false;
-    window.location.href='index.html';
+    if(res.ok){
+      localStorage.setItem('user_session', JSON.stringify({
+        id:data.id || 0, // Si quieres id real, ajusta backend
+        email:email,
+        logged:true
+      }));
+      showToast('¡Cuenta creada y logueada!','success');
+      btn.innerHTML='<span>✓ Registrado</span>';
+      setTimeout(()=>{ window.location.href='index.html'; }, 1000);
+    } else {
+      showToast(data.error,'error');
+      btn.innerHTML='<span>Crear Cuenta</span>';
+      btn.disabled=false;
+    }
 
   } catch(err){
     console.error(err);
