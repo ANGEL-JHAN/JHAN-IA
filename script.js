@@ -1,13 +1,44 @@
 const API_KEY = "123456";
 const hamburger = document.getElementById("hamburger");
 const navLinks = document.getElementById("navLinks");
-hamburger.addEventListener("click", () => { hamburger.classList.toggle("active"); navLinks.classList.toggle("active"); });
-navLinks.querySelectorAll(".nav-link").forEach(l => l.addEventListener("click", () => { hamburger.classList.remove("active"); navLinks.classList.remove("active"); }));
-window.addEventListener("scroll", () => { document.getElementById("navbar").style.background = window.scrollY > 50 ? "rgba(8,11,20,0.95)" : "rgba(8,11,20,0.85)"; });
-(function() { const c = document.getElementById("particles"); for (let i = 0; i < 30; i++) { const p = document.createElement("div"); p.classList.add("particle"); p.style.left = Math.random()*100+"%"; p.style.animationDelay = Math.random()*8+"s"; p.style.animationDuration = (6+Math.random()*6)+"s"; c.appendChild(p); } })();
-const obs = new IntersectionObserver(entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add("visible"); }), { threshold: 0.1 });
+
+hamburger.addEventListener("click", () => {
+  hamburger.classList.toggle("active");
+  navLinks.classList.toggle("active");
+});
+
+navLinks.querySelectorAll(".nav-link").forEach(l =>
+  l.addEventListener("click", () => {
+    hamburger.classList.remove("active");
+    navLinks.classList.remove("active");
+  })
+);
+
+window.addEventListener("scroll", () => {
+  document.getElementById("navbar").style.background =
+    window.scrollY > 50 ? "rgba(8,11,20,0.95)" : "rgba(8,11,20,0.85)";
+});
+
+// Partículas
+(function() {
+  const c = document.getElementById("particles");
+  for (let i = 0; i < 30; i++) {
+    const p = document.createElement("div");
+    p.classList.add("particle");
+    p.style.left = Math.random()*100+"%";
+    p.style.animationDelay = Math.random()*8+"s";
+    p.style.animationDuration = (6+Math.random()*6)+"s";
+    c.appendChild(p);
+  }
+})();
+
+// Animaciones scroll
+const obs = new IntersectionObserver(entries => entries.forEach(e => {
+  if (e.isIntersecting) e.target.classList.add("visible");
+}), { threshold: 0.1 });
 document.querySelectorAll(".animate-on-scroll").forEach(el => obs.observe(el));
 
+// Chat
 const chatMessages = document.getElementById("chatMessages");
 const chatForm = document.getElementById("chatForm");
 const chatInput = document.getElementById("chatInput");
@@ -21,46 +52,83 @@ function addMsg(text, isUser) {
   chatMessages.appendChild(d);
   chatMessages.scrollTop = chatMessages.scrollHeight;
 }
-function showTyping() {
-  const d = document.createElement("div"); d.className = "message bot-message"; d.id = "typing";
-  d.innerHTML = '<div class="message-avatar">AI</div><div class="typing-indicator"><span></span><span></span><span></span></div>';
-  chatMessages.appendChild(d); chatMessages.scrollTop = chatMessages.scrollHeight;
-}
-function removeTyping() { const e = document.getElementById("typing"); if (e) e.remove(); }
 
+function showTyping() {
+  const d = document.createElement("div");
+  d.className = "message bot-message";
+  d.id = "typing";
+  d.innerHTML = '<div class="message-avatar">AI</div><div class="typing-indicator"><span></span><span></span><span></span></div>';
+  chatMessages.appendChild(d);
+  chatMessages.scrollTop = chatMessages.scrollHeight;
+}
+
+function removeTyping() {
+  const e = document.getElementById("typing");
+  if (e) e.remove();
+}
+
+// 🔥 Aquí usamos tu API propia
 async function send(text) {
   addMsg(text, true);
   history.push({ role: "user", content: text });
-  sendBtn.disabled = true; chatInput.disabled = true;
+  sendBtn.disabled = true;
+  chatInput.disabled = true;
   showTyping();
+
   try {
-    const r = await fetch("https://api.openai.com/v1/chat/completions", {
+    const r = await fetch("https://mi-api-clnb.onrender.com/", {
       method: "POST",
-      headers: { "Content-Type": "application/json", "Authorization": "Bearer " + API_KEY },
-      body: JSON.stringify({ model: "gpt-3.5-turbo", messages: history, max_tokens: 500, temperature: 0.7 })
+      headers: {
+        "Content-Type": "application/json",
+        "x-api-key": API_KEY
+      },
+      body: JSON.stringify({ mensaje: text })
     });
+
     if (!r.ok) throw new Error(r.status);
     const data = await r.json();
-    const reply = data.choices[0].message.content.trim();
-    removeTyping(); addMsg(reply, false);
+    const reply = data.respuesta || "🤖 No obtuve respuesta";
+    removeTyping();
+    addMsg(reply, false);
     history.push({ role: "assistant", content: reply });
+
   } catch (e) {
     removeTyping();
-    const fallback = ["¡Interesante! Estoy en modo demo. Conecta tu API real para respuestas con IA completa. 🤖",
+    const fallback = [
+      "¡Interesante! Estoy en modo demo. Conecta tu API real para respuestas con IA completa. 🤖",
       "Soy el bot de ANGEL OFC en modo demo. Configura tu API key para activar la IA. 🚀",
-      "¡Gracias por probarme! Para respuestas reales, cambia la API key en script.js. ⚡"][Math.floor(Math.random()*3)];
+      "¡Gracias por probarme! Para respuestas reales, cambia la API key en script.js. ⚡"
+    ][Math.floor(Math.random()*3)];
     addMsg(fallback, false);
     history.push({ role: "assistant", content: fallback });
   }
-  sendBtn.disabled = false; chatInput.disabled = false; chatInput.focus();
+
+  sendBtn.disabled = false;
+  chatInput.disabled = false;
+  chatInput.focus();
 }
-chatForm.addEventListener("submit", e => { e.preventDefault(); const t = chatInput.value.trim(); if (!t) return; chatInput.value = ""; send(t); });
-document.getElementById("contactForm").addEventListener("submit", e => {
-  e.preventDefault(); const b = e.target.querySelector("button");
-  b.textContent = "¡Enviado! ✓"; b.style.background = "#22c55e";
-  setTimeout(() => { b.textContent = "Enviar Mensaje"; b.style.background = ""; e.target.reset(); }, 3000);
+
+chatForm.addEventListener("submit", e => {
+  e.preventDefault();
+  const t = chatInput.value.trim();
+  if (!t) return;
+  chatInput.value = "";
+  send(t);
 });
 
+document.getElementById("contactForm").addEventListener("submit", e => {
+  e.preventDefault();
+  const b = e.target.querySelector("button");
+  b.textContent = "¡Enviado! ✓";
+  b.style.background = "#22c55e";
+  setTimeout(() => {
+    b.textContent = "Enviar Mensaje";
+    b.style.background = "";
+    e.target.reset();
+  }, 3000);
+});
+
+// Sesión y menú perfil
 document.addEventListener('DOMContentLoaded', () => {
   const session = JSON.parse(localStorage.getItem('user_session'));
   const profileMenu = document.getElementById('profile-menu');
@@ -68,17 +136,14 @@ document.addEventListener('DOMContentLoaded', () => {
   const logoutBtn = document.getElementById('logout-btn');
 
   if (session?.logged) {
-    // Mostrar menú
     profileMenu.classList.remove('hidden');
     userNameSpan.textContent = session.user || session.name || 'Usuario';
   } else {
-    // Ocultar menú si no está logueado
     profileMenu.classList.add('hidden');
   }
 
-  // Cerrar sesión
   logoutBtn.addEventListener('click', () => {
-    localStorage.removeItem('user_session'); // Elimina sesión
-    window.location.href = 'signup.html'; // Redirige al login/signup
+    localStorage.removeItem('user_session');
+    window.location.href = 'signup.html';
   });
 });
