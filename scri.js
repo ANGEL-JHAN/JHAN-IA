@@ -98,6 +98,7 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
       localStorage.setItem('user_session', JSON.stringify({
         id: data.user.id,
         email: data.user.email,
+        plan: data.user.plan,
         logged:true
       }));
       showToast('¡Inicio de sesión exitoso!','success');
@@ -149,8 +150,8 @@ document.getElementById('signupForm').addEventListener('submit', async function(
 
     if(res.ok){
       localStorage.setItem('user_session', JSON.stringify({
-        id:data.id || 0, // Si quieres id real, ajusta backend
-        email:email,
+        id: data.id || 0,
+        email: email,
         logged:true
       }));
       showToast('¡Cuenta creada y logueada!','success');
