@@ -164,4 +164,36 @@ function loginSuccess(username){
 
 // ===================== SESIÓN =====================
 function loginSuccess(username){
-  localStorage.
+  // Guarda sesión en localStorage
+  localStorage.setItem('loggedIn', 'true');
+  localStorage.setItem('username', username);
+
+  // Redirige al index.html después de login o registro
+  window.location.href = 'index.html';
+}
+
+(function(){
+  const sessionLogged = localStorage.getItem("loggedIn");
+  const username = localStorage.getItem("username");
+
+  // Si no está logueado y no estás en signup, redirige a signup
+  if(!sessionLogged){
+    if(!window.location.href.includes("signup.html")){
+      window.location.href = "signup.html";
+    }
+  } else if(username){
+    // Muestra el nombre en la navbar si ya hay sesión
+    const userNameEl = document.getElementById("user-name");
+    if(userNameEl) userNameEl.textContent = `Hola, ${username}`;
+  }
+
+  // Botón de cerrar sesión
+  const logoutBtn = document.getElementById("logout-btn");
+  if(logoutBtn){
+    logoutBtn.addEventListener("click", ()=>{
+      localStorage.removeItem("loggedIn");
+      localStorage.removeItem("username");
+      window.location.href="signup.html";
+    });
+  }
+})();
