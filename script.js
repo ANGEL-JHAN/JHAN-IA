@@ -4,22 +4,27 @@ const hamburger = document.getElementById("hamburger");
 const navLinks = document.getElementById("navLinks");
 
 // ===================== NAVBAR =====================
-hamburger.addEventListener("click", () => {
-  hamburger.classList.toggle("active");
-  navLinks.classList.toggle("active");
-});
+if (hamburger && navLinks) {
+  hamburger.addEventListener("click", () => {
+    hamburger.classList.toggle("active");
+    navLinks.classList.toggle("active");
+  });
 
-navLinks.querySelectorAll(".nav-link").forEach(l =>
-  l.addEventListener("click", () => {
-    hamburger.classList.remove("active");
-    navLinks.classList.remove("active");
-  })
-);
+  navLinks.querySelectorAll(".nav-link").forEach(l =>
+    l.addEventListener("click", () => {
+      hamburger.classList.remove("active");
+      navLinks.classList.remove("active");
+    })
+  );
+}
 
 window.addEventListener("scroll", () => {
-  document.getElementById("navbar").style.background = window.scrollY > 50
-    ? "rgba(8,11,20,0.95)"
-    : "rgba(8,11,20,0.85)";
+  const navbar = document.getElementById("navbar");
+  if(navbar){
+    navbar.style.background = window.scrollY > 50
+      ? "rgba(8,11,20,0.95)"
+      : "rgba(8,11,20,0.85)";
+  }
 });
 
 // ===================== PARTICULAS =====================
@@ -64,27 +69,34 @@ function addMsg(text, isUser){
   const d = document.createElement("div");
   d.className = "message " + (isUser ? "user-message" : "bot-message");
   d.innerHTML = '<div class="message-avatar">'+(isUser?"TÚ":"AI")+'</div><div class="message-content"><p>'+text+'</p></div>';
-  chatMessages.appendChild(d);
-  chatMessages.scrollTop = chatMessages.scrollHeight;
+  if(chatMessages){
+    chatMessages.appendChild(d);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+  }
   if(!isUser) speak(text);
 }
 
 function showTyping(){
   const d = document.createElement("div");
-  d.className = "message bot-message"; d.id="typing";
+  d.className = "message bot-message"; 
+  d.id="typing";
   d.innerHTML = '<div class="message-avatar">AI</div><div class="typing-indicator"><span></span><span></span><span></span></div>';
-  chatMessages.appendChild(d); chatMessages.scrollTop = chatMessages.scrollHeight;
+  if(chatMessages){
+    chatMessages.appendChild(d); 
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+  }
 }
 
 function removeTyping(){
-  const e = document.getElementById("typing"); if(e) e.remove();
+  const e = document.getElementById("typing"); 
+  if(e) e.remove();
 }
 
 async function send(text){
   addMsg(text, true);
   history.push({ role: "user", content: text });
-  sendBtn.disabled = true;
-  chatInput.disabled = true;
+  if(sendBtn) sendBtn.disabled = true;
+  if(chatInput) chatInput.disabled = true;
   showTyping();
 
   try{
@@ -106,58 +118,67 @@ async function send(text){
     history.push({ role:"assistant", content: fallback });
   }
 
-  sendBtn.disabled = false;
-  chatInput.disabled = false;
-  chatInput.focus();
+  if(sendBtn) sendBtn.disabled = false;
+  if(chatInput) chatInput.disabled = false;
+  if(chatInput) chatInput.focus();
 }
 
-chatForm.addEventListener("submit", e=>{
-  e.preventDefault();
-  const t = chatInput.value.trim();
-  if(!t) return;
-  chatInput.value = "";
-  send(t);
-});
+if(chatForm){
+  chatForm.addEventListener("submit", e=>{
+    e.preventDefault();
+    const t = chatInput.value.trim();
+    if(!t) return;
+    chatInput.value = "";
+    send(t);
+  });
+}
 
 // ===================== CONTACTO =====================
-document.getElementById("contactForm").addEventListener("submit", e=>{
-  e.preventDefault();
-  const b = e.target.querySelector("button");
-  b.textContent = "¡Enviado! ✓";
-  b.style.background = "#22c55e";
-  setTimeout(()=>{
-    b.textContent = "Enviar Mensaje";
-    b.style.background="";
-    e.target.reset();
-  },3000);
-});
+const contactForm = document.getElementById("contactForm");
+if(contactForm){
+  contactForm.addEventListener("submit", e=>{
+    e.preventDefault();
+    const b = e.target.querySelector("button");
+    b.textContent = "¡Enviado! ✓";
+    b.style.background = "#22c55e";
+    setTimeout(()=>{
+      b.textContent = "Enviar Mensaje";
+      b.style.background="";
+      e.target.reset();
+    },3000);
+  });
+}
 
 // ===================== SESIÓN =====================
 function loginSuccess(username){
-  // Guarda sesión en localStorage
   localStorage.setItem('loggedIn', 'true');
   localStorage.setItem('username', username);
-
-  // Redirige al index.html después de login o registro
-  window.location.href = 'index.html';
+  window.location.href = 'index.html'; // redirige al index
 }
 
+// ===================== COMPROBAR SESIÓN =====================
 (function(){
   const sessionLogged = localStorage.getItem("loggedIn");
   const username = localStorage.getItem("username");
+  const currentPage = window.location.href;
 
-  // Si no está logueado y no estás en signup, redirige a signup
-  if(!sessionLogged){
-    if(!window.location.href.includes("signup.html")){
-      window.location.href = "signup.html";
-    }
-  } else if(username){
-    // Muestra el nombre en la navbar si ya hay sesión
-    const userNameEl = document.getElementById("user-name");
-    if(userNameEl) userNameEl.textContent = `Hola, ${username}`;
+  // Si no está logueado y no estás en signup o login, redirige a signup
+  if(!sessionLogged && !currentPage.includes("signup.html") && !currentPage.includes("login.html")){
+    window.location.href = "signup.html";
   }
 
-  // Botón de cerrar sesión
+  // Si ya hay sesión y estás en login o signup, redirige al index
+  if(sessionLogged && (currentPage.includes("signup.html") || currentPage.includes("login.html"))){
+    window.location.href = "index.html";
+  }
+
+  // Mostrar nombre en navbar si hay sesión
+  const userNameEl = document.getElementById("user-name");
+  if(username && userNameEl){
+    userNameEl.textContent = `Hola, ${username}`;
+  }
+
+  // Botón logout
   const logoutBtn = document.getElementById("logout-btn");
   if(logoutBtn){
     logoutBtn.addEventListener("click", ()=>{
