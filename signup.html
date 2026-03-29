@@ -113,5 +113,23 @@
   </div>
   <div class="toast" id="toast"></div>
   <script src="scri.js"></script>
+<!-- Solo en signup.html, al final del body -->
+<script>
+  const form = document.getElementById('signupForm');
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    // Guardamos que el usuario está logueado
+    localStorage.setItem('loggedIn', 'true');
+
+    // Guardamos el nombre para mostrar en navbar
+    const nombre = form.nombre.value;
+    localStorage.setItem('userName', nombre);
+
+    // Redirige al index
+    window.location.href = 'index.html';
+  });
+</script>
 </body>
 </html>
