@@ -163,3 +163,8 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
 function loginWithGoogle(){window.location.href=`${API_URL}/login/google`;}
 function loginWithFacebook(){window.location.href=`${API_URL}/login/facebook`;}
 function loginWithGmail(){showToast('Gmail login no implementado','info');}
+// Redirigir si ya está logueado
+const session = JSON.parse(localStorage.getItem('user_session'));
+if(session?.logged) {
+    window.location.href = 'index.html';
+}
