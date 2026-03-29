@@ -10,12 +10,6 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-<script>
-  // Si el usuario no está logueado, lo manda a signup.html
-  if (localStorage.getItem('loggedIn') !== 'true') {
-    window.location.href = 'signup.html';
-  }
-</script>
     <nav class="navbar" id="navbar">
         <div class="nav-container">
             <div class="nav-logo">
@@ -28,10 +22,6 @@
                 <a href="#demo" class="nav-link">Demo</a>
                 <a href="#planes" class="nav-link">Planes</a>
                 <a href="#contacto" class="nav-link">Contacto</a>
-   <!-- NAV USER -->
-            <div class="nav-user">
-                <span id="user-name"></span>
-                <button id="logout-btn">Cerrar sesión</button>
             </div>
             <button class="nav-cta" onclick="document.getElementById('demo').scrollIntoView({behavior:'smooth'})">Probar Bot</button>
             <button class="hamburger" id="hamburger" aria-label="Menú"><span></span><span></span><span></span></button>
@@ -93,17 +83,5 @@
     </section>
     <footer class="footer"><div class="container footer-inner"><div class="footer-logo"><div class="logo-icon" style="width:28px;height:28px"><svg viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="18" stroke="url(#g2)" stroke-width="2"/><circle cx="20" cy="20" r="5" fill="#0ff" opacity="0.6"/><defs><linearGradient id="g2" x1="0" y1="0" x2="40" y2="40"><stop stop-color="#0ff"/><stop offset="1" stop-color="#a855f7"/></linearGradient></defs></svg></div><span class="logo-text" style="font-size:0.9rem">AI Bot</span></div><p>© 2025 AI Bot — By <span style="color:#0ff;font-weight:600">ANGEL OFC</span>. Todos los derechos reservados.</p></div></footer>
     <script src="script.js"></script>
-<script>
-  const userNameSpan = document.getElementById('user-name');
-  const userName = localStorage.getItem('userName');
-  if(userName) userNameSpan.textContent = userName;
-
-  const logoutBtn = document.getElementById('logout-btn');
-  logoutBtn.addEventListener('click', () => {
-    localStorage.removeItem('loggedIn');
-    localStorage.removeItem('userName');
-    window.location.href = 'signup.html';
-  });
-</script>
 </body>
 </html>
