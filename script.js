@@ -84,7 +84,7 @@ function showTyping() {
   d.id = "typing";
   d.innerHTML = `
     <div class="message-avatar">
-      <img src="img.jpg" alt="AI Bot" style="width:40px; height:40px; object-fit:cover; border-radius:50%;">
+      <img src="icono.jpg" alt="AI Bot" style="width:40px; height:40px; object-fit:cover; border-radius:50%;">
     </div>
     <div class="typing-indicator"><span></span><span></span><span></span></div>
   `;
