@@ -65,7 +65,7 @@ function addMsg(text, isUser) {
   d.className = "message " + (isUser ? "user-message" : "bot-message");
   d.innerHTML = `
     <div class="message-avatar">
-      ${isUser ? "TÚ" : '<img src="img.jpg" alt="AI Bot" style="width:40px; height:40px; object-fit:cover; border-radius:50%;">'}
+      ${isUser ? "TÚ" : '<img src="logo.jpg" alt="AI Bot" style="width:40px; height:40px; object-fit:cover; border-radius:50%;">'}
     </div>
     <div class="message-content"><p>${text}</p></div>
   `;
@@ -84,7 +84,7 @@ function showTyping() {
   d.id = "typing";
   d.innerHTML = `
     <div class="message-avatar">
-      <img src="icono.jpg" alt="AI Bot" style="width:40px; height:40px; object-fit:cover; border-radius:50%;">
+      <img src="logo.jpg" alt="AI Bot" style="width:40px; height:40px; object-fit:cover; border-radius:50%;">
     </div>
     <div class="typing-indicator"><span></span><span></span><span></span></div>
   `;
