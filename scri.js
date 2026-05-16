@@ -93,7 +93,7 @@ function showToast(msg,type){
 // 🌐 API URL
 // ============================
 const API_URL =
-"https://jhan-ia.onrender.com";
+"https://mi-api-clnb.onrender.com/";
 
 // ============================
 // 🔹 Signup Form
