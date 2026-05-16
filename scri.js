@@ -1,352 +1,379 @@
 // ============================
 // 🎆 Partículas
 // ============================
-(function(){
-    const c = document.getElementById('particles');
-    for(let i=0;i<40;i++){
-        const p=document.createElement('div');
-        p.className='particle';
-        const s=Math.random()*4+2;
-        p.style.width=s+'px';
-        p.style.height=s+'px';
-        p.style.left=Math.random()*100+'%';
-        p.style.animationDuration=Math.random()*15+10+'s';
-        p.style.animationDelay=Math.random()*10+'s';
-        if(Math.random()>0.5) p.style.background='#b040ff';
+(function () {
+
+    const c = document.getElementById("particles");
+
+    if (!c) return;
+
+    for (let i = 0; i < 40; i++) {
+
+        const p = document.createElement("div");
+
+        p.className = "particle";
+
+        const s = Math.random() * 4 + 2;
+
+        p.style.width = s + "px";
+        p.style.height = s + "px";
+        p.style.left = Math.random() * 100 + "%";
+        p.style.animationDuration =
+            Math.random() * 15 + 10 + "s";
+
+        p.style.animationDelay =
+            Math.random() * 10 + "s";
+
+        if (Math.random() > 0.5) {
+
+            p.style.background = "#b040ff";
+        }
+
         c.appendChild(p);
     }
+
 })();
 
 // ============================
-// 🔹 Toggle Login/Signup Cards
+// 🔹 Toggle Login/Signup
 // ============================
-function showSignup(e){
+function showSignup(e) {
 
-    if(e) e.preventDefault();
-
-    document
-    .getElementById('loginCard')
-    .classList
-    .add('hidden');
+    if (e) e.preventDefault();
 
     document
-    .getElementById('signupCard')
-    .classList
-    .remove('hidden');
+        .getElementById("loginCard")
+        .classList
+        .add("hidden");
+
+    document
+        .getElementById("signupCard")
+        .classList
+        .remove("hidden");
 }
 
-function showLogin(e){
+function showLogin(e) {
 
-    if(e) e.preventDefault();
-
-    document
-    .getElementById('signupCard')
-    .classList
-    .add('hidden');
+    if (e) e.preventDefault();
 
     document
-    .getElementById('loginCard')
-    .classList
-    .remove('hidden');
+        .getElementById("signupCard")
+        .classList
+        .add("hidden");
+
+    document
+        .getElementById("loginCard")
+        .classList
+        .remove("hidden");
 }
 
 // ============================
-// 🔹 Toggle Password Visibility
+// 🔹 Mostrar/Ocultar Password
 // ============================
-function togglePassword(id,btn){
+function togglePassword(id, btn) {
 
-    const inp =
-      document.getElementById(id);
+    const inp = document.getElementById(id);
+
+    if (!inp) return;
 
     inp.type =
-      inp.type==='password'
-      ? 'text'
-      : 'password';
+        inp.type === "password"
+            ? "text"
+            : "password";
 
     btn.style.color =
-      inp.type==='text'
-      ? '#00e5ff'
-      : '';
+        inp.type === "text"
+            ? "#00e5ff"
+            : "";
 }
 
 // ============================
-// 🔹 Toast Notification
+// 🔹 Toast
 // ============================
-function showToast(msg,type){
+function showToast(msg, type = "success") {
 
-    const t =
-      document.getElementById('toast');
+    const t = document.getElementById("toast");
+
+    if (!t) return;
 
     t.textContent = msg;
 
-    t.className =
-      'toast '+type+' show';
+    t.className = `toast ${type} show`;
 
-    setTimeout(()=>{
+    setTimeout(() => {
 
-        t.classList.remove('show');
+        t.classList.remove("show");
 
-    },3000);
+    }, 3000);
 }
 
 // ============================
 // 🌐 API URL
 // ============================
 const API_URL =
-"https://mi-api-clnb.onrender.com";
+    "https://mi-api-clnb.onrender.com";
 
 // ============================
-// 🔹 Signup Form
+// 🔹 SIGNUP
 // ============================
-document
-.getElementById('signupForm')
+const signupForm =
+    document.getElementById("signupForm");
 
-.addEventListener(
+if (signupForm) {
 
-'submit',
+    signupForm.addEventListener(
+        "submit",
 
-async function(e){
+        async function (e) {
 
-    e.preventDefault();
+            e.preventDefault();
 
-    const name =
-      document
-      .getElementById('signupName')
-      .value
-      .trim();
+            const name =
+                document
+                    .getElementById("signupName")
+                    .value
+                    .trim();
 
-    const user =
-      document
-      .getElementById('signupUser')
-      .value
-      .trim();
+            const user =
+                document
+                    .getElementById("signupUser")
+                    .value
+                    .trim();
 
-    const email =
-      document
-      .getElementById('signupEmail')
-      .value
-      .trim();
+            const email =
+                document
+                    .getElementById("signupEmail")
+                    .value
+                    .trim();
 
-    const pass =
-      document
-      .getElementById('signupPassword')
-      .value;
+            const pass =
+                document
+                    .getElementById("signupPassword")
+                    .value;
 
-    if(!name || !user || !email || !pass){
+            if (!name || !user || !email || !pass) {
 
-        return showToast(
-          'Completa todos los campos',
-          'error'
-        );
-    }
-
-    if(pass.length < 8){
-
-        return showToast(
-          'Mínimo 8 caracteres',
-          'error'
-        );
-    }
-
-    try {
-
-        const res = await fetch(
-
-            `${API_URL}/api/register`,
-
-            {
-                method:"POST",
-
-                headers:{
-                    "Content-Type":"application/json"
-                },
-
-                body: JSON.stringify({
-
-                    nombre:name,
-
-                    usuario:user,
-
-                    email:email,
-
-                    password:pass
-                })
+                return showToast(
+                    "Completa todos los campos",
+                    "error"
+                );
             }
-        );
 
-        const data = await res.json();
+            if (pass.length < 8) {
 
-        if(res.ok){
-
-            showToast(
-              '¡Cuenta creada! ✅',
-              'success'
-            );
-
-            setTimeout(()=>{
-
-                showLogin();
-
-            },1500);
-
-        } else {
-
-            showToast(
-
-              data.error ||
-
-              'Error al registrarse',
-
-              'error'
-            );
-        }
-
-    } catch(err){
-
-        console.error(err);
-
-        showToast(
-          'Error de conexión con la API',
-          'error'
-        );
-    }
-});
-
-// ============================
-// 🔹 Login Form
-// ============================
-document
-.getElementById('loginForm')
-
-.addEventListener(
-
-'submit',
-
-async function(e){
-
-    e.preventDefault();
-
-    const email =
-      document
-      .getElementById('loginEmail')
-      .value
-      .trim();
-
-    const pass =
-      document
-      .getElementById('loginPassword')
-      .value;
-
-    if(!email || !pass){
-
-        return showToast(
-          'Completa todos los campos',
-          'error'
-        );
-    }
-
-    try {
-
-        const res = await fetch(
-
-            `${API_URL}/api/login`,
-
-            {
-                method:"POST",
-
-                headers:{
-                    "Content-Type":"application/json"
-                },
-
-                body: JSON.stringify({
-
-                    email,
-
-                    password:pass
-                })
+                return showToast(
+                    "La contraseña debe tener mínimo 8 caracteres",
+                    "error"
+                );
             }
-        );
 
-        const data = await res.json();
+            try {
 
-        if(res.ok){
+                console.log("🔥 Registrando usuario...");
 
-            localStorage.setItem(
+                const res = await fetch(
+                    `${API_URL}/api/register`,
+                    {
+                        method: "POST",
 
-                'user_session',
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
 
-                JSON.stringify({
+                        body: JSON.stringify({
+                            nombre: name,
+                            usuario: user,
+                            email: email,
+                            password: pass
+                        })
+                    }
+                );
 
-                    logged:true,
+                const text = await res.text();
 
-                    token:data.token,
+                console.log("🔥 RESPUESTA:", text);
 
-                    user:data.user
-                })
-            );
+                let data;
 
-            showToast(
-              '¡Inicio de sesión exitoso! ✅',
-              'success'
-            );
+                try {
 
-            setTimeout(()=>{
+                    data = JSON.parse(text);
 
-                window.location.href =
-                'index.html';
+                } catch {
 
-            },1000);
+                    throw new Error("La API devolvió HTML o error");
+                }
 
-        } else {
+                if (res.ok) {
 
-            showToast(
+                    showToast(
+                        "¡Cuenta creada correctamente! ✅",
+                        "success"
+                    );
 
-              data.error ||
+                    setTimeout(() => {
 
-              'Email o contraseña incorrectos',
+                        showLogin();
 
-              'error'
-            );
+                    }, 1500);
+
+                } else {
+
+                    showToast(
+                        data.error ||
+                        "Error al registrarse",
+                        "error"
+                    );
+                }
+
+            } catch (err) {
+
+                console.error("❌ ERROR:", err);
+
+                showToast(
+                    "Error de conexión con la API",
+                    "error"
+                );
+            }
         }
-
-    } catch(err){
-
-        console.error(err);
-
-        showToast(
-          'Error de conexión con la API',
-          'error'
-        );
-    }
-});
+    );
+}
 
 // ============================
-// 🔹 Inicializar Página
+// 🔹 LOGIN
+// ============================
+const loginForm =
+    document.getElementById("loginForm");
+
+if (loginForm) {
+
+    loginForm.addEventListener(
+        "submit",
+
+        async function (e) {
+
+            e.preventDefault();
+
+            const email =
+                document
+                    .getElementById("loginEmail")
+                    .value
+                    .trim();
+
+            const pass =
+                document
+                    .getElementById("loginPassword")
+                    .value;
+
+            if (!email || !pass) {
+
+                return showToast(
+                    "Completa todos los campos",
+                    "error"
+                );
+            }
+
+            try {
+
+                console.log("🔥 Iniciando sesión...");
+
+                const res = await fetch(
+                    `${API_URL}/api/login`,
+                    {
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+
+                        body: JSON.stringify({
+                            email,
+                            password: pass
+                        })
+                    }
+                );
+
+                const text = await res.text();
+
+                console.log("🔥 LOGIN RESP:", text);
+
+                let data;
+
+                try {
+
+                    data = JSON.parse(text);
+
+                } catch {
+
+                    throw new Error("La API devolvió HTML");
+                }
+
+                if (res.ok) {
+
+                    localStorage.setItem(
+                        "user_session",
+
+                        JSON.stringify({
+                            logged: true,
+                            token: data.token,
+                            user:
+                                data.user?.user_metadata?.usuario ||
+                                data.user?.email
+                        })
+                    );
+
+                    showToast(
+                        "¡Login exitoso! ✅",
+                        "success"
+                    );
+
+                    setTimeout(() => {
+
+                        window.location.href =
+                            "index.html";
+
+                    }, 1000);
+
+                } else {
+
+                    showToast(
+                        data.error ||
+                        "Email o contraseña incorrectos",
+                        "error"
+                    );
+                }
+
+            } catch (err) {
+
+                console.error("❌ LOGIN ERROR:", err);
+
+                showToast(
+                    "Error de conexión con la API",
+                    "error"
+                );
+            }
+        }
+    );
+}
+
+// ============================
+// 🔹 INICIALIZAR
 // ============================
 document.addEventListener(
+    "DOMContentLoaded",
 
-'DOMContentLoaded',
+    () => {
 
-()=>{
+        const session = JSON.parse(
+            localStorage.getItem("user_session")
+        );
 
-    const session = JSON.parse(
+        if (session?.logged) {
 
-      localStorage.getItem(
-        'user_session'
-      )
-    );
+            console.log("✅ Usuario logueado");
 
-    // 🔥 SI YA ESTÁ LOGUEADO
-    if(session?.logged){
+        }
 
-        window.location.href =
-        'index.html';
-
-        return;
+        showLogin();
     }
-
-    // 🔥 MOSTRAR LOGIN
-    showLogin();
-
-    // showSignup();
-});
+);
