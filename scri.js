@@ -21,116 +21,332 @@
 // 🔹 Toggle Login/Signup Cards
 // ============================
 function showSignup(e){
+
     if(e) e.preventDefault();
-    document.getElementById('loginCard').classList.add('hidden');
-    document.getElementById('signupCard').classList.remove('hidden');
+
+    document
+    .getElementById('loginCard')
+    .classList
+    .add('hidden');
+
+    document
+    .getElementById('signupCard')
+    .classList
+    .remove('hidden');
 }
+
 function showLogin(e){
+
     if(e) e.preventDefault();
-    document.getElementById('signupCard').classList.add('hidden');
-    document.getElementById('loginCard').classList.remove('hidden');
+
+    document
+    .getElementById('signupCard')
+    .classList
+    .add('hidden');
+
+    document
+    .getElementById('loginCard')
+    .classList
+    .remove('hidden');
 }
 
 // ============================
 // 🔹 Toggle Password Visibility
 // ============================
 function togglePassword(id,btn){
-    const inp = document.getElementById(id);
-    inp.type = inp.type==='password' ? 'text' : 'password';
-    btn.style.color = inp.type==='text' ? '#00e5ff' : '';
+
+    const inp =
+      document.getElementById(id);
+
+    inp.type =
+      inp.type==='password'
+      ? 'text'
+      : 'password';
+
+    btn.style.color =
+      inp.type==='text'
+      ? '#00e5ff'
+      : '';
 }
 
 // ============================
 // 🔹 Toast Notification
 // ============================
 function showToast(msg,type){
-    const t=document.getElementById('toast');
-    t.textContent=msg;
-    t.className='toast '+type+' show';
-    setTimeout(()=>t.classList.remove('show'),3000);
+
+    const t =
+      document.getElementById('toast');
+
+    t.textContent = msg;
+
+    t.className =
+      'toast '+type+' show';
+
+    setTimeout(()=>{
+
+        t.classList.remove('show');
+
+    },3000);
 }
 
 // ============================
-// 🌐 API URL - Database
+// 🌐 API URL
 // ============================
-const API_URL = "https://database-2poz.onrender.com";
+const API_URL =
+"https://jhan-ia.onrender.com";
 
 // ============================
 // 🔹 Signup Form
 // ============================
-document.getElementById('signupForm').addEventListener('submit', async function(e){
-    e.preventDefault();
-    const name = document.getElementById('signupName').value.trim();
-    const user = document.getElementById('signupUser').value.trim();
-    const email = document.getElementById('signupEmail').value.trim();
-    const pass = document.getElementById('signupPassword').value;
+document
+.getElementById('signupForm')
 
-    if(!name||!user||!email||!pass) return showToast('Completa todos los campos','error');
-    if(pass.length<8) return showToast('Mínimo 8 caracteres','error');
+.addEventListener(
+
+'submit',
+
+async function(e){
+
+    e.preventDefault();
+
+    const name =
+      document
+      .getElementById('signupName')
+      .value
+      .trim();
+
+    const user =
+      document
+      .getElementById('signupUser')
+      .value
+      .trim();
+
+    const email =
+      document
+      .getElementById('signupEmail')
+      .value
+      .trim();
+
+    const pass =
+      document
+      .getElementById('signupPassword')
+      .value;
+
+    if(!name || !user || !email || !pass){
+
+        return showToast(
+          'Completa todos los campos',
+          'error'
+        );
+    }
+
+    if(pass.length < 8){
+
+        return showToast(
+          'Mínimo 8 caracteres',
+          'error'
+        );
+    }
 
     try {
-        const res = await fetch(`${API_URL}/register`, {
-            method:"POST",
-            headers:{"Content-Type":"application/json"},
-            body: JSON.stringify({name,user,email,password:pass})
-        });
+
+        const res = await fetch(
+
+            `${API_URL}/api/register`,
+
+            {
+                method:"POST",
+
+                headers:{
+                    "Content-Type":"application/json"
+                },
+
+                body: JSON.stringify({
+
+                    nombre:name,
+
+                    usuario:user,
+
+                    email:email,
+
+                    password:pass
+                })
+            }
+        );
+
         const data = await res.json();
+
         if(res.ok){
-            showToast('¡Cuenta creada! ✅','success');
-            setTimeout(()=>showLogin(),1500);
+
+            showToast(
+              '¡Cuenta creada! ✅',
+              'success'
+            );
+
+            setTimeout(()=>{
+
+                showLogin();
+
+            },1500);
+
         } else {
-            showToast(data.error||'Error al registrarse','error');
+
+            showToast(
+
+              data.error ||
+
+              'Error al registrarse',
+
+              'error'
+            );
         }
+
     } catch(err){
+
         console.error(err);
-        showToast('Error de conexión con la API','error');
+
+        showToast(
+          'Error de conexión con la API',
+          'error'
+        );
     }
 });
 
 // ============================
 // 🔹 Login Form
 // ============================
-document.getElementById('loginForm').addEventListener('submit', async function(e){
-    e.preventDefault();
-    const email = document.getElementById('loginEmail').value.trim();
-    const pass = document.getElementById('loginPassword').value;
+document
+.getElementById('loginForm')
 
-    if(!email||!pass) return showToast('Completa todos los campos','error');
+.addEventListener(
+
+'submit',
+
+async function(e){
+
+    e.preventDefault();
+
+    const email =
+      document
+      .getElementById('loginEmail')
+      .value
+      .trim();
+
+    const pass =
+      document
+      .getElementById('loginPassword')
+      .value;
+
+    if(!email || !pass){
+
+        return showToast(
+          'Completa todos los campos',
+          'error'
+        );
+    }
 
     try {
-        const res = await fetch(`${API_URL}/login`, {
-            method:"POST",
-            headers:{"Content-Type":"application/json"},
-            body: JSON.stringify({email,password:pass})
-        });
+
+        const res = await fetch(
+
+            `${API_URL}/api/login`,
+
+            {
+                method:"POST",
+
+                headers:{
+                    "Content-Type":"application/json"
+                },
+
+                body: JSON.stringify({
+
+                    email,
+
+                    password:pass
+                })
+            }
+        );
+
         const data = await res.json();
+
         if(res.ok){
-            localStorage.setItem('user_session', JSON.stringify({logged:true,...data.user}));
-            showToast('¡Inicio de sesión exitoso! ✅','success');
-            setTimeout(()=>window.location.href='index.html',1000);
+
+            localStorage.setItem(
+
+                'user_session',
+
+                JSON.stringify({
+
+                    logged:true,
+
+                    token:data.token,
+
+                    user:data.user
+                })
+            );
+
+            showToast(
+              '¡Inicio de sesión exitoso! ✅',
+              'success'
+            );
+
+            setTimeout(()=>{
+
+                window.location.href =
+                'index.html';
+
+            },1000);
+
         } else {
-            showToast(data.error||'Email o contraseña incorrectos','error');
+
+            showToast(
+
+              data.error ||
+
+              'Email o contraseña incorrectos',
+
+              'error'
+            );
         }
+
     } catch(err){
+
         console.error(err);
-        showToast('Error de conexión con la API','error');
+
+        showToast(
+          'Error de conexión con la API',
+          'error'
+        );
     }
 });
 
 // ============================
 // 🔹 Inicializar Página
 // ============================
-document.addEventListener('DOMContentLoaded',()=>{
-    const session = JSON.parse(localStorage.getItem('user_session'));
+document.addEventListener(
 
-    // Si ya está logueado, redirige
+'DOMContentLoaded',
+
+()=>{
+
+    const session = JSON.parse(
+
+      localStorage.getItem(
+        'user_session'
+      )
+    );
+
+    // 🔥 SI YA ESTÁ LOGUEADO
     if(session?.logged){
-        window.location.href='index.html';
+
+        window.location.href =
+        'index.html';
+
         return;
     }
 
-    // Mostrar el formulario deseado al inicio
-    // Cambia a showSignup() si quieres que aparezca primero el registro
+    // 🔥 MOSTRAR LOGIN
     showLogin();
+
     // showSignup();
 });
